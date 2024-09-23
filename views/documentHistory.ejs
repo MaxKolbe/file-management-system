@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="stylesheet" href="/documentHistory.css">
+    <script src="https://kit.fontawesome.com/5e2b46074f.js" crossorigin="anonymous"></script>
+    <title>History | Obrafms</title>
+</head>
+<body>
+    <img src="/logo.png" alt="logo">
+    <a href="/uploadForm"><i class="fa-solid fa-angle-left"></i> </a>
+    <% if(req.query.message === "success") {%>
+        <p id="success" class="deleteSuccess">Document Deleted Successfully</p>
+    <% } %>  
+    <h1>Document History:</h1>
+    <ul>
+        <% documents.forEach(document =>{ %>
+        <li>
+            <div>
+                <h4><%=document.caseTitle%> <i class="fa-solid fa-angles-left"></i> <%=document.documentName%> <i class="fa-solid fa-angles-left"></i> <%=document.caseTitle%> <i class="fa-solid fa-angles-left"></i> <%=document.court%> <i class="fa-solid fa-angles-left"></i> <%=document.year%>  <i class="fa-solid fa-angles-left"></i> <%=document.court%> <i class="fa-solid fa-angles-left"></i> <%=document.typeOfCase%> </h4>
+            </div>
+            <form action="/uploadForm/<%=document.id%>?_method=DELETE" method="POST">
+                <button class="del" type="submit" style="color: rgb(161, 12, 57); border: 2px solid rgb(161, 12, 57);"> Delete </button>
+            </form>
+        </li>
+        <% }) %>
+    </ul>
+    <script>
+        // JavaScript to hide the error message after 3 seconds
+        window.onload = function() {
+            const successMessage = document.getElementById('success');
+            console.log("there is an error:", successMessage)
+            if (successMessage) {
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+    
+                // Remove query parameters after the success message is displayed
+                const url = new URL(window.location);
+                url.search = ''; // Clear the query string
+                window.history.replaceState({}, document.title, url.pathname); // Replace the URL
+            }
+        };
+    </script>
+</body>
+</html>

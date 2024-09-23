@@ -1,0 +1,132 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+:root{
+    --white: #fff;
+    --black: #000;
+    --button: #905D0E;
+    --accent: #E19616;
+}
+body{
+    border: .15rem solid var(--accent);
+}
+.wrapper{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img{
+    width: 60px;
+    position: absolute;
+    top: 8%;
+    left: 6%;
+    transform: translate(-50%, -50%);
+}
+a{
+    position: absolute;
+    top: 6%;
+    right: 4%;
+    transform: translate(-50%, -50%); 
+}
+.success{
+    font-size: 16px;
+    text-align: center;
+    color: var(--white);
+    background-color: green;
+    width: 50%;
+    margin: 0 auto;
+    padding: 4px 2px;
+    border-radius: 6px;
+}
+.error{
+    font-size: 16px;
+    text-align: center;
+    color: var(--white);
+    background-color: red;
+    width: 50%;
+    margin: 0 auto;
+    padding: 4px 2px;
+    border-radius: 6px;
+}
+h1{
+    font-size: 18px;
+    text-align: center;
+}
+form{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+form div{
+    display: flex;
+    flex-direction: column;
+}
+form div label{
+    font-size: 12px;
+    margin-bottom: 1px;
+}
+form div input{
+    padding: 8px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+}
+form div input:focus{
+    outline: 2px solid var(--button);
+}
+form div input:hover{
+    cursor: pointer;
+}
+select {
+    padding: 8px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+}
+select:focus {
+    outline: 2px solid var(--button);
+}
+/* Add background color to options on hover (using pseudo-element) */
+select option:hover {
+    background-color: red; /* Background on hover */
+    color: red;
+}
+button{
+    border: none;
+    background-color: var(--button);
+    color: var(--white);
+    padding: 8px 12px;
+    width: 40%;
+    border-radius: 6px;
+    margin: 0 auto;
+    cursor: pointer;
+    overflow: hidden;
+}
+button:hover{
+    background-color: var(--accent);
+    transition: .3s;
+}
+a{
+    text-align: right;
+    color: var(--accent);
+}
+.error-message{
+    font-size: 12px;
+}
+@media only screen and (max-width: 760px) {
+    form{
+        width: 80%;
+    }
+    img{
+        width: 40px;
+        top: 6%;
+      
+    }
+    a{
+        top: 6%;
+        right: 1%;
+    }
+}
