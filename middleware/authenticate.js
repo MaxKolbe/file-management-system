@@ -5,7 +5,7 @@ dotenv.config()
 const verifyStaff = (req, res, next)=>{
     const token = req.cookies.staff
     if(token){
-      jwt.verify(token, process.env.secret, (err, user)=>{
+      jwt.verify(token, process.env.SECRET, (err, user)=>{
         if(err){
             res.status(500).redirect('/?error=Error+in+verifying+staff')
         }else{
