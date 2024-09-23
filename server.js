@@ -25,7 +25,7 @@ app.use(express.urlencoded({extended: true})) //Accessing forms in the req varia
 app.use(methodOverride("_method")) //Overide form to enable DELETE
 app.use(cookieParser())
 app.set("view engine", "ejs") // setting view engine
-app.set('views', 'Views'); // setting views folder
+app.set('views', 'views'); // setting views folder
    
 app.use('/', routes)
  
