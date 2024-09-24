@@ -12,6 +12,13 @@ const userSchema = mongoose.Schema({
     isAdmin:{
         type: Boolean,
         default: true
+    },
+    otp:{
+        type: String,
+        default: " "
+    },
+    expiresIn:{
+        type: Date
     }
 }, { timestamps: true })
 

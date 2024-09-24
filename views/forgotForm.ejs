@@ -3,41 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="/logo.png" type="image/png">
-    <link rel="stylesheet" href="/login.css"> 
-    <title>Login | Obrafms</title>
+    <link rel="stylesheet" href="/forgot.css"> 
+    <title>Forgot Password | Obrafms</title>
 </head>
 <body>
     <img src="/logo.png" alt="logo">
-    <% if (req.query.error === "An error occurred during login") { %>
-        <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
-    <% } %>
     <div class="wrapper">
-        <form action="/login" method="post">
+        <form action="/forgotPassword" method="post">
+            <% if(req.query.message === "Reset mail sent successfully") {%>
+                <p id="error-message" class="success"><%=req.query.message %></p>
+            <% } %>  
+            <% if (req.query.error === "An error occurred during preset") { %>
+                <span id="error-message" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
+            <% } %>
+            <% if (req.query.error === "An error occurred during reset") { %>
+                <span id="error-message" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
+            <% } %>
             <div>
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email" required>
-                <% if (req.query.error === "No user found") { %>
+                <% if (req.query.error === "Email not found") { %>
+                    <p class="error-message" id="error-message" style="color: red;"><%= req.query.error %></p>
+                <% } %>
+                <% if (req.query.error === "No such user") { %>
                     <p class="error-message" id="error-message" style="color: red;"><%= req.query.error %></p>
                 <% } %>
             </div>
             <br>
             <div>
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <% if (req.query.error === "Incorrect password") { %>
-                    <p class="error-message" id="error-message" style="color: red;"><%= req.query.error %></p>
-                <% } %>
+                <button type="submit">Send Mail</button>
             </div>
-            <br>
-            <div>
-                <button type="submit">Login</button>
-            </div>
-            <br>
-            <a href="/forgotPassword">Forgot Password?</a>
         </form>
     </div>
 <script>
@@ -53,4 +50,4 @@
     };
 </script>
 </body>
-</html>>
+</html>

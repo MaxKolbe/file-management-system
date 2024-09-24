@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+:root{
+    --white: #fff;
+    --black: #000;
+    --button: #905D0E;
+    --accent: #E19616;
+}
+body{
+   border: .15rem solid var(--accent);
+}
+.wrapper{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img{
+    width: 60px;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+form{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+form div{
+    display: flex;
+    flex-direction: column;
+}
+form div label{
+    font-size: 12px;
+    margin-bottom: 1px;
+}
+form div input{
+    /* height: 40px; */
+    padding: 8px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+}
+form div input:focus{
+    outline: 2px solid var(--button);
+}
+form div input:hover{
+    cursor: pointer;
+}
+button{
+    border: none;
+    background-color: var(--button);
+    color: var(--white);
+    padding: 8px 12px;
+    width: 40%;
+    border-radius: 6px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+button:hover{
+    background-color: var(--accent);
+    transition: .3s;
+}
+.error-message{
+    font-size: 12px;
+}
+.success{
+    font-size: 16px;
+    text-align: center;
+    color: var(--white);
+    background-color: green;
+    width: 50%;
+    margin: 0 auto;
+    padding: 4px 2px;
+    border-radius: 6px;
+}
+@media only screen and (max-width: 760px) {
+    form{
+        width: 80%;
+    }
+}
