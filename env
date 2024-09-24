@@ -1,5 +1,0 @@
-PORT = 3000
-OFFICECODE = 'obra47'
-SECRET = "dominumvobiscume"
-DATABASEURL = 'mongodb+srv://info:OhHc7CHF4bdSQWDF@clusterobrafms.5ijqs.mongodb.net/FMS'
-password = OhHc7CHF4bdSQWDF
