@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="stylesheet" href="/forgot.css"> 
+    <title>Reset Password | Obrafms</title>
+</head>
+<body>
+    <img src="/logo.png" alt="logo">
+    <% if (req.query.error === "An error occurred during preset") { %>
+        <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+    <% } %>
+    <div class="wrapper">
+        <form action="/forgotPassword/resetPassword/<%=otp%>` method="post">
+            <div>
+                <div>
+                    <label for="password">New password</label>
+                    <input type="password" id="password" name="password" placeholder="New password" required>
+                    <% if (req.query.error === "Try different password") { %>
+                        <p class="error-message" id="error-message" style="color: red;"><%= req.query.error %></p>
+                    <% } %>
+                </div>
+            </div>
+            <br>
+            <div>
+                <button type="submit">Reset Password</button>
+            </div>
+        </form>
+    </div>
+<script>
+    // JavaScript to hide the error message after 3 seconds
+    window.onload = function() {
+        const errorMessage = document.getElementById('error-message');
+        console.log("there is an error:", errorMessage)
+        if (errorMessage) {
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000); // 3 seconds
+        }
+    };
+</script>
+</body>
+</html>

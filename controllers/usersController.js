@@ -2,7 +2,7 @@ import userModel from "../models/userModel.js"
 import signJwt from "../utils/createJwt.js"
 import bcrypt from "bcrypt"
 import dotenv from 'dotenv'
-dotenv.config()
+dotenv.config() 
 
 export const signupGet = (req, res) => {
     res.status(200).render('signup', { req })
