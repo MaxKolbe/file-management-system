@@ -70,6 +70,16 @@ a{
     text-align: right;
     color: var(--accent);
 }
+.success{
+    font-size: 16px;
+    text-align: center;
+    color: var(--white);
+    background-color: green;
+    width: 50%;
+    margin: 0 auto;
+    padding: 4px 2px;
+    border-radius: 6px;
+}
 .error-message{
     font-size: 12px;
 }

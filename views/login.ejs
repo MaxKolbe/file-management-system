@@ -12,11 +12,14 @@
 </head>
 <body>
     <img src="/logo.png" alt="logo">
-    <% if (req.query.error === "An error occurred during login") { %>
-        <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
-    <% } %>
     <div class="wrapper">
         <form action="/login" method="post">
+            <% if (req.query.error === "An error occurred during login") { %>
+                <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+            <% } %>
+            <% if(req.query.message === "password reset successful") {%>
+                <p id="error-message" class="success">Password reset successful</p>
+            <% } %>  
             <div>
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email" required>

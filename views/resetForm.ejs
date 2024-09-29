@@ -13,8 +13,11 @@
     <% if (req.query.error === "An error occurred during preset") { %>
         <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
     <% } %>
+    <% if (req.query.error === "No such user") { %>
+        <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+    <% } %>
     <div class="wrapper">
-        <form action="/forgotPassword/resetPassword/<%=otp%>` method="post">
+        <form action="/resetPassword/<%=token%>" method="post">
             <div>
                 <div>
                     <label for="password">New password</label>

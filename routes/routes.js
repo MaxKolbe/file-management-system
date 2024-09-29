@@ -18,7 +18,7 @@ router.delete("/uploadForm/:id", verifyStaff, deleteForm)
 
 router.get("/forgotPassword", getForgotForm)
 router.post("/forgotPassword", postForgotForm)
-router.get("/forgotPassword/resetPassword/:id", getResetForm)
-router.post("/forgotPassword/resetPassword/:id", postResetForm)
+router.get("/resetPassword/:id", getResetForm)
+router.post("/resetPassword/:id", postResetForm)
 
 export default router   
