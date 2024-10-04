@@ -12,12 +12,12 @@ export const getFormHistory = async (req, res) => {
 
 //res.redirect() will return a status code of 302 regardless of what you specify
 export const postUploadForm = async (req, res) => {
-    const {documentName, caseTitle, year, typeOfCase, court, fileType, url} = req.body
+    const {documentName, suitNumber, year, typeOfCase, court, fileType, url} = req.body
     try{
-        if(!documentName || !caseTitle || !year || !typeOfCase || !court || !fileType || !url){
+        if(!documentName || !suitNumber || !year || !typeOfCase || !court || !fileType || !url){
            res.status(400).redirect('/uploadForm?error=Fill+all+form+fields!')
         }else{
-            await documentModel.create({documentName, caseTitle, year, typeOfCase, court, fileType, url})
+            await documentModel.create({documentName, suitNumber, year, typeOfCase, court, fileType, url})
             res.status(201).redirect('/uploadForm?message=success')
             // res.status(201).render('uploadForm', {message: "Successful upload"})
         }

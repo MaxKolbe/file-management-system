@@ -22,7 +22,13 @@
         <% documents.forEach(document =>{ %>
         <li>
             <div>
-                <h4><%=document.caseTitle%> <i class="fa-solid fa-angles-left"></i> <%=document.documentName%> <i class="fa-solid fa-angles-left"></i> <%=document.caseTitle%> <i class="fa-solid fa-angles-left"></i> <%=document.court%> <i class="fa-solid fa-angles-left"></i> <%=document.year%>  <i class="fa-solid fa-angles-left"></i> <%=document.court%> <i class="fa-solid fa-angles-left"></i> <%=document.typeOfCase%> </h4>
+                <h4>    
+                    <%=document.documentName%> <i class="fa-solid fa-angles-left"></i>
+                    <%=document.suitNumber%> <i class="fa-solid fa-angles-left"></i> 
+                    <%=document.court%> <i class="fa-solid fa-angles-left"></i> 
+                    <%=document.year%> <i class="fa-solid fa-angles-left"></i> 
+                    <%=document.typeOfCase%> 
+                </h4>
             </div>
             <form action="/uploadForm/<%=document.id%>?_method=DELETE" method="POST">
                 <button class="del" type="submit" style="color: rgb(161, 12, 57); border: 2px solid rgb(161, 12, 57);"> Delete </button>

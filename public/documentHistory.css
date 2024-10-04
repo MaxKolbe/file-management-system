@@ -31,6 +31,9 @@ ul li{
     border: 1px solid var(--black);
     margin: 12px 4px;
 }
+ul li i{
+    color: var(--button);
+}
 ul li h4{
     margin-left: 4px;
 }
