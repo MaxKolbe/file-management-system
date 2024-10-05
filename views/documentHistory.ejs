@@ -14,12 +14,12 @@
 <body>
     <img src="/logo.png" alt="logo">
     <a href="/uploadForm"><i class="fa-solid fa-angle-left"></i> </a>
-    <% if(req.query.message === "success") {%>
+    <% if(req.query.message === "success") { %>
         <p id="success" class="deleteSuccess">Document Deleted Successfully</p>
     <% } %>  
     <h1>Document History:</h1>
     <ul>
-        <% documents.forEach(document =>{ %>
+        <% documents.forEach(document => { %>
         <li>
             <div>
                 <h4>    
@@ -36,16 +36,31 @@
         </li>
         <% }) %>
     </ul>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+            <a href="/uploadForm/history?page=<%= currentPage - 1 %>">Previous</a>
+        <% } %>
+        
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="/uploadForm/history?page=<%= i %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+        <% } %>
+        
+        <% if (currentPage < totalPages) { %>
+            <a href="/uploadForm/history?page=<%= currentPage + 1 %>">Next</a>
+        <% } %>
+    </div>
+
     <script>
-        // JavaScript to hide the error message after 3 seconds
+        // JavaScript to hide the success message after 3 seconds
         window.onload = function() {
             const successMessage = document.getElementById('success');
-            console.log("there is an error:", successMessage)
             if (successMessage) {
                 setTimeout(() => {
                     successMessage.style.display = 'none';
                 }, 3000);
-    
+
                 // Remove query parameters after the success message is displayed
                 const url = new URL(window.location);
                 url.search = ''; // Clear the query string

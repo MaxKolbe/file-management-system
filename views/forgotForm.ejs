@@ -21,6 +21,9 @@
             <% if (req.query.error === "An error occurred during reset") { %>
                 <span id="error-message" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
             <% } %>
+            <% if (req.query.error === "User not found") { %>
+                <span id="error-message" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
+            <% } %>
             <div>
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email" required>
@@ -46,6 +49,11 @@
             setTimeout(() => {
                 errorMessage.style.display = 'none';
             }, 3000); // 3 seconds
+
+            // Remove query parameters after the success message is displayed
+            const url = new URL(window.location);
+            url.search = ''; // Clear the query string
+            window.history.replaceState({}, document.title, url.pathname); // Replace the URL
         }
     };
 </script>

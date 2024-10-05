@@ -40,6 +40,12 @@ ul li h4{
 form button{
     margin: 4px;
 }
+.pagination{
+    margin-left: 6px;
+}
+.pagination a{
+    color: var(--button);
+}
 @media only screen and (max-width: 760px) {
     img{
         width: 40px;

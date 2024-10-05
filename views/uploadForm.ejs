@@ -21,6 +21,9 @@
             <% if(req.query.error === "Fill all form fields!") {%>
                 <p id="success" class="error">Fill all select form fields!</p>
             <% } %>  
+            <% if (req.query.error === "An error occurred during upload") { %>
+                <span id="success" class="error"><%= req.query.error%></h3></span>
+            <% } %>
             <h1>Upload Documents</h1>
             <div>
                 <label for="typeOfCase">Type of case</label>
@@ -86,7 +89,7 @@
             </div>
             <br>
             <div>
-                <button type="submit">Upload</button>
+                <button type="submit" id="uploadBtn">Upload</button>
             </div>
         </form>
     </div>
@@ -106,6 +109,16 @@
             window.history.replaceState({}, document.title, url.pathname); // Replace the URL
         }
     };
+
+    // JavaScript to prevent multiple form submissions
+    const uploadForm = document.querySelector('form');
+    const uploadBtn = document.getElementById('uploadBtn');
+
+    uploadForm.addEventListener('submit', function() {
+    // Disable the button after the form is submitted
+    uploadBtn.disabled = true;
+    uploadBtn.innerText = 'Uploading...'; // Optional: change button text to indicate progress
+    });
 </script>
 </body>
 </html>

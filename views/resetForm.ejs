@@ -42,6 +42,11 @@
             setTimeout(() => {
                 errorMessage.style.display = 'none';
             }, 3000); // 3 seconds
+
+            // Remove query parameters after the success message is displayed
+            const url = new URL(window.location);
+            url.search = ''; // Clear the query string
+            window.history.replaceState({}, document.title, url.pathname); // Replace the URL
         }
     };
 </script>

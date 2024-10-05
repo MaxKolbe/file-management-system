@@ -14,7 +14,8 @@ const userSchema = mongoose.Schema({
         default: true
     },
     otp:{  
-        type: String
+        type: String,
+        default: " "
     },
     expiresIn:{
         type: Date
