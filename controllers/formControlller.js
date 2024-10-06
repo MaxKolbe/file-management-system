@@ -5,10 +5,6 @@ export const getUploadForm = (req, res) => {
     // res.status(200).render('uploadForm',  { req, message: null })
 } 
 
-// export const getFormHistory = async (req, res) => { 
-//     const documents = await documentModel.find().sort({ createdAt: -1 })
-//     res.render("documentHistory", {documents: documents, req})
-// } 
 export const getFormHistory = async (req, res) => {
     const page = parseInt(req.query.page) || 1; // Default to page 1 if no query parameter
     const limit = 8; // Limit the number of documents per page
@@ -53,6 +49,33 @@ export const postUploadForm = async (req, res) => {
         res.status(500).redirect('/uploadForm?error=An+error+occurred+during+upload')
     }
 }
+
+export const getUpdateForm = async (req, res) => {
+    const id = req.params.id  
+    const document = await documentModel.findById(id)
+    res.status(201).render("updateForm", {document, req}) 
+}
+
+export const updateForm = async (req, res) => {
+    const id = req.params.id 
+    const updateFields = {}
+
+    if (req.body.documentName) {updateFields.documentName = req.body.documentName}
+    if (req.body.suitNumber) {updateFields.suitNumber = req.body.suitNumber}
+    if (req.body.year) {updateFields.year = req.body.year}
+    if (req.body.typeOfCase) {updateFields.typeOfCase = req.body.typeOfCase}
+    if (req.body.court) {updateFields.court = req.body.court}
+    if (req.body.fileType) {updateFields.fileType = req.body.fileType}
+    if (req.body.url) {updateFields.url = req.body.url}
+
+    try{
+        await documentModel.findByIdAndUpdate(id,{ $set: updateFields })
+        res.status(201).redirect('/uploadForm?message=Update+success')
+    }catch(err){
+        console.error(err);
+        res.status(500).redirect(`/updateForm/${id}?error=An+error+occurred+during+update`)
+    }
+}  
 
 export const deleteForm = async (req, res) => {
     const id = req.params.id

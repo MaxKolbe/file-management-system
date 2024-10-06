@@ -25,13 +25,13 @@ img{
     width: 60px;
     position: absolute;
     top: 8%;
-    left: 6%;
+    right: 6%;
     transform: translate(-50%, -50%);
 }
 a{
     position: absolute;
     top: 6%;
-    right: 4%;
+    left: 4%;
     transform: translate(-50%, -50%); 
 }
 .success{
@@ -39,16 +39,6 @@ a{
     text-align: center;
     color: var(--white);
     background-color: green;
-    width: 50%;
-    margin: 0 auto;
-    padding: 4px 2px;
-    border-radius: 6px;
-}
-.success-update{
-    font-size: 16px;
-    text-align: center;
-    color: var(--white);
-    background-color: var(--blue);
     width: 50%;
     margin: 0 auto;
     padding: 4px 2px;
@@ -67,6 +57,9 @@ a{
 h1{
     font-size: 18px;
     text-align: center;
+}
+.doc-name{
+    color: var(--blue);
 }
 form{
   display: flex;
@@ -128,16 +121,18 @@ a{
     font-size: 12px;
 }
 @media only screen and (max-width: 760px) {
+    h1{
+        font-size: 16px;
+    }
     form{
         width: 80%;
     }
     img{
         width: 40px;
-        top: 6%;
-      
+        top: 6%; 
     }
     a{
         top: 6%;
-        right: 1%;
+        left: 8%;
     }
 }

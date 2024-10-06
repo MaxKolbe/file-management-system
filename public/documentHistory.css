@@ -9,6 +9,7 @@
     --black: #000;
     --button: #905D0E;
     --accent: #E19616;
+    --blue: #1058A1; 
 }
 body{
    border: .15rem solid var(--accent);
@@ -37,20 +38,36 @@ ul li i{
 ul li h4{
     margin-left: 4px;
 }
+form{
+    display: flex;
+    align-items: center;
+}
 form button{
     margin: 4px;
+    color: rgb(161, 12, 57); 
+    border: 2px solid rgb(161, 12, 57);
+    background-color: #f0f0f0;
+    cursor: pointer;
+    padding: 3px 1px;
+}
+form a{
+    margin: 4px;
+    color: var(--blue); 
+    border: 2px solid var(--blue);
+    background-color: #f0f0f0;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 1.2px 4px;
 }
 .pagination{
     margin-left: 6px;
 }
 .pagination a{
     color: var(--button);
+    font-weight: bold;
 }
-@media only screen and (max-width: 760px) {
-    img{
-        width: 40px;
-        margin: 10px 16px;
-    }
+.pagination a:hover{
+    color: var(--accent);
 }
 .deleteSuccess{
     font-size: 16px;
@@ -62,4 +79,10 @@ form button{
     margin: 0 auto;
     padding: 4px 2px;
     border-radius: 6px;
+}
+@media only screen and (max-width: 760px) {
+    img{
+        width: 40px;
+        margin: 10px 16px;
+    }
 }
