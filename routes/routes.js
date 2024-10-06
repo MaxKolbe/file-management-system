@@ -2,7 +2,7 @@ import express from 'express'
 import {loginGet, loginPost, signupGet, signupPost} from '../controllers/usersController.js'
 import {getUploadForm, getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm} from '../controllers/formControlller.js'
 import {getResetForm, postResetForm, getForgotForm, postForgotForm} from '../controllers/forgotPasswordController.js'
-import verifyStaff from '../middleware/authenticate.js'
+import {verifyStaff, verifyStaffAndAdmin} from '../middleware/authenticate.js'
 
 const router = express.Router()
 
@@ -12,12 +12,12 @@ router.post("/signup", signupPost)
 router.get("/login", loginGet)
 router.post("/login", loginPost) 
 //DOCUMENTS
-router.get("/uploadForm", verifyStaff, getUploadForm)
-router.post("/uploadForm", verifyStaff, postUploadForm)
-router.get("/uploadForm/history", verifyStaff, getFormHistory)
-router.get("/updateForm/:id", verifyStaff, getUpdateForm)
-router.put("/updateForm/:id", verifyStaff, updateForm)
-router.delete("/uploadForm/:id", verifyStaff, deleteForm)
+router.get("/uploadForm", verifyStaffAndAdmin, getUploadForm)
+router.post("/uploadForm", verifyStaffAndAdmin, postUploadForm)
+router.get("/uploadForm/history", verifyStaffAndAdmin, getFormHistory)
+router.get("/updateForm/:id", verifyStaffAndAdmin, getUpdateForm)
+router.put("/updateForm/:id", verifyStaffAndAdmin, updateForm)
+router.delete("/uploadForm/:id", verifyStaffAndAdmin, deleteForm)
 //FORGOT-PASSWORD
 router.get("/forgotPassword", getForgotForm)
 router.post("/forgotPassword", postForgotForm)
