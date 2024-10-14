@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
-    otp:{
+    otp:{  
         type: String,
         default: " "
     },

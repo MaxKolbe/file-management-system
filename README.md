@@ -1,4 +1,6 @@
-# File Managment System
+# File Managment System (Version 1)
+-Version 1 serves as the basic form of the project, with only signup/login features and document upload to the database
+
 This is the documentation for a file management system I am building. 
 It will also serve as a reservoir for documenting common errors I encounter and/or solve/ 
 

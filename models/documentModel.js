@@ -5,7 +5,7 @@ const documentSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please enter a document name']
     }, 
-    caseTitle: {
+    suitNumber: {
         type: String,
         required: [true, 'Please enter a caseTitle']
     }, 

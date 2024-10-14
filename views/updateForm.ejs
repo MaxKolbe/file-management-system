@@ -7,27 +7,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="/logo.png" type="image/png">
-    <link rel="stylesheet" href="/uploadForm.css">
-    <title>Upload | Obrafms</title>
+    <link rel="stylesheet" href="/updateForm.css">
+    <script src="https://kit.fontawesome.com/5e2b46074f.js" crossorigin="anonymous"></script>
+    <title>Update | Obrafms</title>
 </head>
 <body>
     <img src="/logo.png" alt="logo">
-    <a href="/uploadForm/history">History</a>
+    <a href="/uploadForm/history"><i class="fa-solid fa-angle-left"></i> History</a>
     <div class="wrapper">
-        <form action="/uploadForm" method="post">
-            <% if(req.query.message === "success") {%>
-                <p id="success" class="success">Document Uploaded Successfully</p>
-            <% } %>  
-            <% if(req.query.message === "Update success") {%>
-                <p id="success" class="success-update">Document Updated Successfully</p>
-            <% } %>  
-            <% if(req.query.error === "Fill all form fields!") {%>
-                <p id="success" class="error">Fill all select form fields!</p>
-            <% } %>  
-            <% if (req.query.error === "An error occurred during upload") { %>
+        <form action="/updateForm/<%=document.id%>?_method=PUT" method="post">
+            <% if (req.query.error === "An error occurred during update") { %>
                 <span id="success" class="error"><%= req.query.error%></h3></span>
             <% } %>
-            <h1>Upload Documents</h1>
+            <h1>Update Document "<span class="doc-name"><%=document.documentName%></span>"</h1>
             <div>
                 <label for="typeOfCase">Type of case</label>
                 <select name="typeOfCase" id="typeOfCase">
@@ -69,12 +61,12 @@
             <br>
             <div>
                 <label for="suitNumber">Suit Number</label>
-                <input type="text" id="suitNumber" name="suitNumber" placeholder="Suit Number" required>
+                <input type="text" id="suitNumber" name="suitNumber" placeholder="Suit Number">
             </div>
             <br>
             <div>
                 <label for="documentName">Document Name</label>
-                <input type="text" id="documentName" name="documentName" placeholder="Document Name" required>
+                <input type="text" id="documentName" name="documentName" placeholder="Document Name">
             </div>
             <br>
             <div>
@@ -88,11 +80,11 @@
             <br>
             <div>
                 <label for="url">File url</label>
-                <input type="text" id="url" name="url" placeholder="File url" required>
+                <input type="text" id="url" name="url" placeholder="File url">
             </div>
             <br>
             <div>
-                <button type="submit" id="uploadBtn">Upload</button>
+                <button type="submit" id="uploadBtn">Update</button>
             </div>
         </form>
     </div>
@@ -120,7 +112,7 @@
     uploadForm.addEventListener('submit', function() {
     // Disable the button after the form is submitted
     uploadBtn.disabled = true;
-    uploadBtn.innerText = 'Uploading...'; // Optional: change button text to indicate progress
+    uploadBtn.innerText = 'Updatinging...'; // Optional: change button text to indicate progress
     });
 </script>
 </body>

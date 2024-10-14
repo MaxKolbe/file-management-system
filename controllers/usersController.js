@@ -26,7 +26,7 @@ export const signupPost = async (req, res) => {
                 const user = await userModel.create({email, password: hashedPassword}) 
                 const token = signJwt(user.id)
                 res.cookie("staff", token, {httpOnly: true})//save the jwt as a cookie 
-                res.status(200).redirect('/uploadForm')
+                res.status(200).redirect('/login')
             } 
         }
     }catch(err){

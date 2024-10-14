@@ -9,6 +9,7 @@
     --black: #000;
     --button: #905D0E;
     --accent: #E19616;
+    --blue: #1058A1; 
 }
 body{
     border: .15rem solid var(--accent);
@@ -38,6 +39,16 @@ a{
     text-align: center;
     color: var(--white);
     background-color: green;
+    width: 50%;
+    margin: 0 auto;
+    padding: 4px 2px;
+    border-radius: 6px;
+}
+.success-update{
+    font-size: 16px;
+    text-align: center;
+    color: var(--white);
+    background-color: var(--blue);
     width: 50%;
     margin: 0 auto;
     padding: 4px 2px;
