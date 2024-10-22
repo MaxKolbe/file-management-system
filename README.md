@@ -29,7 +29,7 @@ The features (will be added as I build) include:
 ### Database
 I figured how to connect to my monggose database. 
 That is: retrieve the url, and connect. 
-I made sure to retrieve the correct url and end it with the database name, in this case: "FMS" i.e 'mongodb+srv://info:OhHc7CHF4bdSQWDF@clusterobrafms.5ijqs.mongodb.net/FMS'
+I made sure to retrieve the correct url and end it with the database name, in this case: "FMS" i.e 'mongodb+srv://info:password@clustername.mongodb.net/FMS'
 ![](./public/Images/s1.png) 
 ![](./public/Images/s2.png) 
 
