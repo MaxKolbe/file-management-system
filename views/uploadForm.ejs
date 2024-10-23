@@ -14,7 +14,7 @@
     <img src="/logo.png" alt="logo">
     <a href="/uploadForm/history">History</a>
     <div class="wrapper">
-        <form action="/uploadForm" method="post">
+        <form action="/uploadForm" method="post" enctype="multipart/form-data">
             <% if(req.query.message === "success") {%>
                 <p id="success" class="success">Document Uploaded Successfully</p>
             <% } %>  
@@ -73,22 +73,12 @@
             </div>
             <br>
             <div>
-                <label for="documentName">Document Name</label>
-                <input type="text" id="documentName" name="documentName" placeholder="Document Name" required>
+                <label for="tags">Tags</label>
+                <input type="text" name="tags" placeholder="Tags (comma separated)" />
             </div>
             <br>
             <div>
-                <label for="fileType">File type</label>
-                <select name="fileType" id="fileType">
-                    <option value="" disabled selected hidden>File type</option>
-                    <option value=".docx">.docx</option>
-                    <option value=".pdf">.pdf</option>
-                </select>
-            </div>
-            <br>
-            <div>
-                <label for="url">File url</label>
-                <input type="text" id="url" name="url" placeholder="File url" required>
+                <input type="file" name="file" required />
             </div>
             <br>
             <div>
@@ -99,29 +89,29 @@
 <script>
     // JavaScript to hide the error message after 3 seconds
     window.onload = function() {
-        const successMessage = document.getElementById('success');
+        const successMessage = document.getElementById('success')
         console.log("there is an error:", successMessage)
         if (successMessage) {
             setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 3000);
+                successMessage.style.display = 'none'
+            }, 3000)
 
             // Remove query parameters after the success message is displayed
-            const url = new URL(window.location);
-            url.search = ''; // Clear the query string
-            window.history.replaceState({}, document.title, url.pathname); // Replace the URL
+            const url = new URL(window.location)
+            url.search = '' // Clear the query string
+            window.history.replaceState({}, document.title, url.pathname) // Replace the URL
         }
-    };
+    }
 
     // JavaScript to prevent multiple form submissions
-    const uploadForm = document.querySelector('form');
-    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadForm = document.querySelector('form')
+    const uploadBtn = document.getElementById('uploadBtn')
 
     uploadForm.addEventListener('submit', function() {
     // Disable the button after the form is submitted
-    uploadBtn.disabled = true;
-    uploadBtn.innerText = 'Uploading...'; // Optional: change button text to indicate progress
-    });
+    uploadBtn.disabled = true
+    uploadBtn.innerText = 'Uploading...' // Optional: change button text to indicate progress
+    })
 </script>
 </body>
 </html>

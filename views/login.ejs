@@ -46,17 +46,17 @@
 <script>
     // JavaScript to hide the error message after 3 seconds
     window.onload = function() {
-        const errorMessage = document.getElementById('error-message');
+        const errorMessage = document.getElementById('error-message')
         console.log("there is an error:", errorMessage)
         if (errorMessage) {
             setTimeout(() => {
-                errorMessage.style.display = 'none';
-            }, 3000); // 3 seconds
+                errorMessage.style.display = 'none'
+            }, 3000) // 3 seconds
 
             // Remove query parameters after the success message is displayed
-            const url = new URL(window.location);
-            url.search = ''; // Clear the query string
-            window.history.replaceState({}, document.title, url.pathname); // Replace the URL
+            const url = new URL(window.location)
+            url.search = '' // Clear the query string
+            window.history.replaceState({}, document.title, url.pathname) // Replace the URL
         }
     };
 </script>
