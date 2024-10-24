@@ -2,17 +2,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Noto Sans", sans-serif;
+    font-family: Arial, sans-serif;
 }
 :root{
     --white: #fff;
     --black: #000;
     --button: #905D0E;
     --accent: #E19616;
+    --blue: #1058A1; 
+    --grey-background: #f4f4f4;
+    --grey-text: #333; 
+    --grey-hover: #555;
+    --success: green; 
+    --error: red; 
 }
 body{
-   border: .15rem solid var(--accent);
-}
+    border: .3rem solid var(--grey-text);
+    background-color: var(--grey-background);
+ }
 .wrapper{
     height: 100vh;
     width: 100%;
@@ -43,27 +50,28 @@ form div label{
 form div input{
     /* height: 40px; */
     padding: 8px 12px;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
+    border: 2px solid var(--grey-text);
+    border-radius: 4px;
 }
 form div input:focus{
-    outline: 2px solid var(--button);
+    outline: 2px solid var(--grey-hover);
 }
 form div input:hover{
     cursor: pointer;
 }
 button{
+    font-size: 1rem;
     border: none;
-    background-color: var(--button);
+    background-color: var(--grey-text);
     color: var(--white);
-    padding: 8px 12px;
+    padding: 10px 15px;
     width: 40%;
-    border-radius: 6px;
+    border-radius: 4px;
     margin: 0 auto;
     cursor: pointer;
 }
 button:hover{
-    background-color: var(--accent);
+    background-color: var(--grey-hover);
     transition: .3s;
 }
 .error-message{
@@ -73,7 +81,7 @@ button:hover{
     font-size: 16px;
     text-align: center;
     color: var(--white);
-    background-color: green;
+    background-color: var(--success);
     width: 50%;
     margin: 0 auto;
     padding: 4px 2px;
@@ -81,7 +89,7 @@ button:hover{
 }
 .internet{
     font-size: 12px;
-    color: green;
+    color: var(--success);
 }
 @media only screen and (max-width: 760px) {
     form{

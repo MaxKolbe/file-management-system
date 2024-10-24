@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Noto Sans", sans-serif;
+    font-family: Arial, sans-serif;
 }
 :root{
     --white: #fff;
@@ -10,17 +10,28 @@
     --button: #905D0E;
     --accent: #E19616;
     --blue: #1058A1; 
+    --grey-background: #f4f4f4;
+    --grey-text: #333; 
+    --grey-hover: #555;
+    --success: green; 
+    --error: red; 
 }
 body{
-   border: .15rem solid var(--accent);
+    background-color: var(--grey-background);
+    padding: 0 20px;
 }
 img{
     width: 60px;
     margin: 4px 16px;
     float: right;
 }
+.back{
+    font-size: 36px;
+    padding: 4px 12px;
+    text-decoration: none;
+    color: var(--grey-text);
+}
 a i{
-    color: var(--button);
     font-size: 32px;
     padding: 4px 12px;
 }
@@ -28,9 +39,14 @@ h1{
     margin-left: 6px;
 }
 ul li{
-    list-style: none;
-    border: 1px solid var(--black);
-    margin: 12px 4px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 ul li i{
     color: var(--button);
@@ -44,9 +60,10 @@ form{
 }
 form button{
     margin: 4px;
+    margin-left: 8px;
     color: rgb(161, 12, 57); 
     border: 2px solid rgb(161, 12, 57);
-    background-color: #f0f0f0;
+    background-color: var(--white);
     cursor: pointer;
     padding: 3px 1px;
 }
@@ -54,7 +71,7 @@ form a{
     margin: 4px;
     color: var(--blue); 
     border: 2px solid var(--blue);
-    background-color: #f0f0f0;
+    background-color: var(--white);
     text-decoration: none;
     cursor: pointer;
     padding: 1.2px 4px;
@@ -63,22 +80,22 @@ form a{
     margin-left: 6px;
 }
 .pagination a{
-    color: var(--button);
+    color: var(--grey-text);
     font-weight: bold;
 }
 .pagination a:hover{
-    color: var(--accent);
+    color: var(--grey-hover);
 }
 .deleteSuccess{
     font-size: 16px;
     text-align: center;
-    color: red;
-    background-color: #f0f0f0;
-    border: 1px solid red;
-    width: 20%;
+    color: var(--error);
+    border: 2px solid var(--error);
+    background-color: var(--white);
+    width: 50%;
     margin: 0 auto;
     padding: 4px 2px;
-    border-radius: 6px;
+    border-radius: 5px;
 }
 @media only screen and (max-width: 760px) {
     img{

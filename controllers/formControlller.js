@@ -13,14 +13,18 @@ export const getUploadForm = (req, res) => {
 //res.redirect() will return a status code of 302 regardless of what you specify
 export const postUploadForm = async (req, res) => {
     try {
+        // Any additional metadata
+        const { typeOfCase, year, court, suitNumber, tags } = req.body // Example form fields for metadata
+
+        if(!typeOfCase || !year || !court || !suitNumber){ 
+            res.status(400).redirect('/uploadForm?error=Fill+all+form+fields!')
+        }
+        
         // Extract file information
         const filePath = req.file.path // Path to the file in  local system
         const fileSize = req.file.size // File size in bytes
         const fileName = req.file.filename // Stored file name
         const fileType = path.extname(req.file.originalname) // File type 
-
-        // Any additional metadata
-        const { typeOfCase, year, court, suitNumber, tags } = req.body // Example form fields for metadata
 
         // Store metadata in MongoDB
         const fileData = new fileModel({
@@ -37,12 +41,12 @@ export const postUploadForm = async (req, res) => {
 
         await fileData.save()
 
-        res.status(201).redirect('/uploadForm?message=success')
-    } catch (error) {
+        res.status(201).redirect('/uploadForm?message=success') 
+    } catch (err) {
         console.error(err)
         res.status(500).redirect('/uploadForm?error=An+error+occurred+during+upload')
     }
-}
+} 
 
 export const getUpdateForm = async (req, res) => {
     const id = req.params.id  
@@ -142,10 +146,10 @@ export const deleteForm = async (req, res) => {
         res.status(500).send('Internal server error')
     }
 }
-
+ 
 export const getFormHistory = async (req, res) => {
     const page = parseInt(req.query.page) || 1; // Default to page 1 if no query parameter
-    const limit = 8; // Limit the number of documents per page
+    const limit = 7; // Limit the number of documents per page
     const skip = (page - 1) * limit; // Calculate the number of documents to skip
 
     try {

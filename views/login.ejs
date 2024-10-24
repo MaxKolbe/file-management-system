@@ -6,25 +6,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="icon" href="/images/images/logo.png" type="image/png">
     <link rel="stylesheet" href="/login.css"> 
     <title>Login | Obrafms</title>
 </head>
 <body>
-    <img src="/logo.png" alt="logo">
+    <img src="images/logo.png" alt="logo">
     <div class="wrapper">
         <form action="/login" method="post">
             <% if (req.query.error === "An error occurred during login") { %>
-                <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+                <span id="popup" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
             <% } %>
             <% if(req.query.message === "password reset successful") {%>
-                <p id="error-message" class="success">Password reset successful</p>
+                <p id="popup" class="success">Password reset successful</p>
             <% } %>  
             <div>
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email" required>
                 <% if (req.query.error === "No user found") { %>
-                    <p class="error-message" id="error-message" style="color: red;"><%= req.query.error %></p>
+                    <p class="error-message" id="popup" style="color: red;"><%= req.query.error %></p>
                 <% } %>
             </div>
             <br>
@@ -32,7 +32,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password" required>
                 <% if (req.query.error === "Incorrect password") { %>
-                    <p class="error-message" id="error-message" style="color: red;"><%= req.query.error %></p>
+                    <p class="error-message" id="popup" style="color: red;"><%= req.query.error %></p>
                 <% } %>
             </div>
             <br>
@@ -46,11 +46,11 @@
 <script>
     // JavaScript to hide the error message after 3 seconds
     window.onload = function() {
-        const errorMessage = document.getElementById('error-message')
-        console.log("there is an error:", errorMessage)
-        if (errorMessage) {
+        const popup = document.getElementById('popup')
+        console.log("there is an error:", popup)
+        if (popup) {
             setTimeout(() => {
-                errorMessage.style.display = 'none'
+                popup.style.display = 'none'
             }, 3000) // 3 seconds
 
             // Remove query parameters after the success message is displayed
@@ -58,7 +58,7 @@
             url.search = '' // Clear the query string
             window.history.replaceState({}, document.title, url.pathname) // Replace the URL
         }
-    };
+    }
 </script>
 </body>
 </html>>

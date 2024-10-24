@@ -1,0 +1,115 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+:root{
+    --white: #fff;
+    --black: #000;
+    --button: #905D0E;
+    --accent: #E19616;
+    --blue: #1058A1; 
+    --grey-background: #f4f4f4;
+    --grey-text: #333; 
+    --grey-hover: #555;
+    --success: green; 
+    --error: red; 
+}
+body {
+    background-color: var(--grey-background);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1 {
+    color: var(--grey-text);
+    margin-bottom: 20px;
+}
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.icons img{
+    width: 28px;
+    height: 28px;
+    margin-left: .8rem;
+}
+.header h1 {
+    font-size: 2.5rem;
+    color: var(--grey-text);
+    margin-top: 1rem;
+}
+.search-bar {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+.search-bar input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+    border: 2px solid var(--grey-text);
+    border-radius: 4px;
+    outline: none;
+}
+.search-bar button {
+    padding: 10px 15px;
+    margin-left: 10px;
+    background-color: var(--grey-text);
+    color: var(--white);
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.search-bar button:hover {
+    background-color: var(--grey-hover);
+}
+.file-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.file-item img {
+    width: 100%;
+    height: auto;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+.file-item a {
+    text-decoration: none;
+    color: var(--black);
+}
+.error{
+    font-size: 16px;
+    text-align: center;
+    color: var(--error);
+    border: 2px solid var(--error);
+    background-color: var(--white);
+    width: 25%;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+
+.no-results {
+    text-align: center;
+    color: #777;
+    margin-top: 50px;
+}

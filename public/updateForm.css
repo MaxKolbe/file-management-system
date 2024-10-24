@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Noto Sans", sans-serif;
+    font-family: Arial, sans-serif;
 }
 :root{
     --white: #fff;
@@ -10,6 +10,11 @@
     --button: #905D0E;
     --accent: #E19616;
     --blue: #1058A1; 
+    --grey-background: #f4f4f4;
+    --grey-text: #333; 
+    --grey-hover: #555;
+    --success: green; 
+    --error: red; 
 }
 body{
     border: .15rem solid var(--accent);
@@ -37,22 +42,24 @@ a{
 .success{
     font-size: 16px;
     text-align: center;
-    color: var(--white);
-    background-color: green;
+    color: var(--success);
+    border: 2px solid var(--success);
+    background-color: var(--white);
     width: 50%;
     margin: 0 auto;
+    border-radius: 5px;
     padding: 4px 2px;
-    border-radius: 6px;
 }
 .error{
     font-size: 16px;
     text-align: center;
-    color: var(--white);
-    background-color: red;
+    color: var(--error);
+    border: 2px solid var(--error);
+    background-color: var(--white);
     width: 50%;
     margin: 0 auto;
     padding: 4px 2px;
-    border-radius: 6px;
+    border-radius: 5px;
 }
 h1{
     font-size: 18px;

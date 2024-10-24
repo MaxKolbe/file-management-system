@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/logo.png" type="image/png">
+    <link rel="stylesheet" href="/home.css"> 
+    <title>Home | Obrafms</title>
+</head>
+<body>
+    <% if(req.query.error === "Error in verifying admin") {%>
+        <p id="popup" class="error">Only admins can Access this Route</p>
+    <% } %> 
+    <div class="container">
+        
+        <!-- Header with Files title and search bar -->
+        <div class="header">
+            <h1>Documents</h1>
+            <form class="search-bar" action="/search" method="POST">
+                <input type="text" name="query" placeholder="Search for a file..." required>
+                <button type="submit">Search</button>
+            </form>
+           <div>
+            <a href="/uploadForm" class="icons" title="Upload Document: Admin Only"><img src="/images/upload.png" alt="upload-link"></a>           
+            <a href="/" class="icons" title="Developer Settings: Dev Max Only"><img src="/images/dev.png" alt="dev-pc-settings"></a>
+            <a href="/home" class="icons"><img src="/images/logo.png" alt="logo"></a>
+           </div>
+        </div>
+        <!-- File results -->
+        <div >
+            <h2>Contents of: <%= relativePath || 'Root Directory' %></h2>
+            <ul>
+                <% folderContents.forEach(item => { %>
+                    <li class="file-item">
+                        <% if (item.isFolder) { %>
+                            <img src="/images/folder.png" alt="Folder Icon" />
+                            <a href="?path=<%= item.path %>"><%= item.name %></a>
+                        <% } else { %>
+                            <img src="/images/file.png" alt="File Icon" />
+                            <a href="/downloadFile?path=<%= item.path %>"><%= item.name %></a> <!-- Link to download the file -->
+                        <% } %>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+      
+<script>
+    // JavaScript to hide the error message after 3 seconds
+    window.onload = function() {
+        const popup = document.getElementById('popup')
+        console.log("there is an error:", popup)
+        if (popup) {
+            setTimeout(() => {
+                popup.style.display = 'none'
+            }, 3000) // 3 seconds
+
+            // Remove query parameters after the success message is displayed
+            const url = new URL(window.location)
+            url.search = '' // Clear the query string
+            window.history.replaceState({}, document.title, url.pathname) // Replace the URL
+        }
+    }
+</script>
+</body>
+</html>

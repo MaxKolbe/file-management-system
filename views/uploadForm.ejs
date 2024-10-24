@@ -6,26 +6,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="icon" href="/images/logo.png" type="image/png">
     <link rel="stylesheet" href="/uploadForm.css">
     <title>Upload | Obrafms</title>
 </head>
 <body>
-    <img src="/logo.png" alt="logo">
-    <a href="/uploadForm/history">History</a>
+    <img src="/images/logo.png" alt="logo">
+    <a href="/home" title="Home" class="back">&#8678;</a>
+    <a href="/uploadForm/history" title="File Upload History"><img src="/images/file-history.png" alt="History Link"></a>
     <div class="wrapper">
         <form action="/uploadForm" method="post" enctype="multipart/form-data">
             <% if(req.query.message === "success") {%>
-                <p id="success" class="success">Document Uploaded Successfully</p>
+                <p id="popup" class="success">Document Uploaded Successfully</p>
             <% } %>  
             <% if(req.query.message === "Update success") {%>
-                <p id="success" class="success-update">Document Updated Successfully</p>
+                <p id="popup" class="success-update">Document Updated Successfully</p>
             <% } %>  
             <% if(req.query.error === "Fill all form fields!") {%>
-                <p id="success" class="error">Fill all select form fields!</p>
+                <p id="popup" class="error">Fill all select form fields!</p>
             <% } %>  
             <% if (req.query.error === "An error occurred during upload") { %>
-                <span id="success" class="error"><%= req.query.error%></h3></span>
+                <span id="popup" class="error"><%= req.query.error%></h3></span>
             <% } %>
             <h1>Upload Documents</h1>
             <div>
@@ -34,9 +35,9 @@
                     <option value="" disabled selected hidden>Type of case</option>
                     <!-- <option value="Templates">Templates</option> -->
                     <option value="Property">Property</option>
-                    <option value="Libel & Defamation">Libel & Defamation</option>
+                    <option value="Libel and Defamation">Libel and Defamation</option>
                     <option value="Land">Land</option>
-                    <option value="Land & Succession">Land & Succession</option>
+                    <option value="Land and Succession">Land and Succession</option>
                     <option value="Fundamental Human Rights">Fundamental Human Rights</option>
                     <option value="Contract">Contract</option>
                     <option value="Chieftancy">Chieftancy</option>
@@ -89,11 +90,11 @@
 <script>
     // JavaScript to hide the error message after 3 seconds
     window.onload = function() {
-        const successMessage = document.getElementById('success')
-        console.log("there is an error:", successMessage)
-        if (successMessage) {
+        const popup = document.getElementById('popup')
+        console.log("there is an error:", popup)
+        if (popup) {
             setTimeout(() => {
-                successMessage.style.display = 'none'
+                popup.style.display = 'none'
             }, 3000)
 
             // Remove query parameters after the success message is displayed

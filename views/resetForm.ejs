@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="icon" href="/images/logo.png" type="image/png">
     <link rel="stylesheet" href="/forgot.css"> 
     <title>Reset Password | Obrafms</title>
 </head>
 <body>
-    <img src="/logo.png" alt="logo">
+    <img src="/images/logo.png" alt="logo">
     <% if (req.query.error === "An error occurred during preset") { %>
-        <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+        <span id="popup" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
     <% } %>
     <% if (req.query.error === "No such user") { %>
-        <span id="error-message" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+        <span id="popup" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
     <% } %>
     <div class="wrapper">
         <form action="/resetPassword/<%=token%>" method="post">
@@ -23,7 +23,7 @@
                     <label for="password">New password</label>
                     <input type="password" id="password" name="password" placeholder="New password" required>
                     <% if (req.query.error === "Try different password") { %>
-                        <p class="error-message" id="error-message" style="color: red;"><%= req.query.error %></p>
+                        <p class="error-message" id="popup" style="color: red;"><%= req.query.error %></p>
                     <% } %>
                 </div>
             </div>
@@ -36,11 +36,11 @@
 <script>
     // JavaScript to hide the error message after 3 seconds
     window.onload = function() {
-        const errorMessage = document.getElementById('error-message')
-        console.log("there is an error:", errorMessage)
-        if (errorMessage) {
+        const popup = document.getElementById('popup')
+        console.log("there is an error:", popup)
+        if (popup) {
             setTimeout(() => {
-                errorMessage.style.display = 'none'
+                popup.style.display = 'none'
             }, 3000) // 3 seconds
 
             // Remove query parameters after the success message is displayed
@@ -48,7 +48,7 @@
             url.search = '' // Clear the query string
             window.history.replaceState({}, document.title, url.pathname) // Replace the URL
         }
-    };
+    }
 </script>
 </body>
 </html>

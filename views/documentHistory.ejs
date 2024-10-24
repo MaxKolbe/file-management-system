@@ -3,30 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="icon" href="images/logo.png" type="image/png">
     <link rel="stylesheet" href="/documentHistory.css">
-    <script src="https://kit.fontawesome.com/5e2b46074f.js" crossorigin="anonymous"></script>
     <title>History | Obrafms</title>
 </head>
 <body>
-    <img src="/logo.png" alt="logo">
-    <a href="/uploadForm"><i class="fa-solid fa-angle-left"></i> </a>
+    <img src="/images/logo.png" alt="logo">
+    <a href="/uploadForm" class="back">&#8678;</a>
     <% if(req.query.message === "success") { %>
-        <p id="success" class="deleteSuccess">Document Deleted Successfully</p>
+        <p id="popup" class="deleteSuccess">Document Deleted Successfully</p>
     <% } %>  
-    <h1>Document History:</h1>
+    <h1>File Upload History</h1>
     <ul>
         <% documents.forEach(document => { %>
         <li>
             <div>
                 <h4>    
-                    <%=document.fileName%> <i class="fa-solid fa-angles-left"></i>
-                    <%=document.suitNumber%> <i class="fa-solid fa-angles-left"></i> 
-                    <%=document.court%> <i class="fa-solid fa-angles-left"></i> 
-                    <%=document.year%> <i class="fa-solid fa-angles-left"></i> 
+                    <%=document.fileName%> /
+                    <%=document.suitNumber%> /
+                    <%=document.court%> /
+                    <%=document.year%> /
                     <%=document.typeOfCase%> 
                 </h4>
             </div>
@@ -56,10 +52,10 @@
     <script>
         // JavaScript to hide the success message after 3 seconds
         window.onload = function() {
-            const successMessage = document.getElementById('success');
-            if (successMessage) {
+            const popup = document.getElementById('popup');
+            if (popup) {
                 setTimeout(() => {
-                    successMessage.style.display = 'none';
+                    popup.style.display = 'none';
                 }, 3000);
 
                 // Remove query parameters after the success message is displayed
@@ -67,7 +63,7 @@
                 url.search = ''; // Clear the query string
                 window.history.replaceState({}, document.title, url.pathname); // Replace the URL
             }
-        };
+        }
     </script>
 </body>
 </html>

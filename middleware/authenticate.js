@@ -24,18 +24,18 @@ export const verifyStaffAndAdmin = async (req, res, next) => {
   if(token){
     jwt.verify(token, process.env.SECRET, async (err, user)=>{
       if(err){
-        res.status(500).redirect('/?error=Error+in+verifying+staff')
+        res.status(500).redirect('/?error=Error+in+verifying+token')
       }else{
       req.user = user
       const guy = await userModel.findById(user.id)
       if(guy.isAdmin === true){
         next()
       }else{
-        res.status(500).redirect('/?error=Is+not+admin')
+        res.status(500).redirect('/home/?error=Error+in+verifying+admin')
       }}
     })
   }else{ 
-    res.status(500).redirect('/?error=Error+in+verifying+token')
+    res.status(500).redirect('/home/?error=Error+in+verifying+admin')
   }
 }
 

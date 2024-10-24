@@ -43,7 +43,7 @@ export const loginPost = async (req, res) => {
             if(await bcrypt.compare(password, user.password)){
                 const token = signJwt(user.id)
                 res.cookie("staff", token, {httpOnly: true})//save the jwt as a cookie 
-                res.status(200).redirect('/uploadForm')
+                res.status(200).redirect('/home')
             }else{
                 res.status(404).redirect('/login/?error=Incorrect+password')   
             } 

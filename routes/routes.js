@@ -1,4 +1,5 @@
 import express from 'express'
+import { getHome } from '../controllers/homeController.js'
 import {loginGet, loginPost, signupGet, signupPost} from '../controllers/usersController.js'
 import {getUploadForm, getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm} from '../controllers/formControlller.js'
 import {getResetForm, postResetForm, getForgotForm, postForgotForm} from '../controllers/forgotPasswordController.js'
@@ -9,6 +10,8 @@ import fs from "fs"
 
 const router = express.Router()
 
+//HOME PAGE
+router.get("/home", verifyStaff, getHome)
 //USERS
 router.get("/", signupGet)
 router.post("/signup", signupPost) 
