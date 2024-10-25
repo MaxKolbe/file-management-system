@@ -39,5 +39,25 @@ export const verifyStaffAndAdmin = async (req, res, next) => {
   }
 }
 
+export const verifyStaffAdminAndDev = async (req, res, next) => {
+  const token = req.cookies.staff
+  if(token){
+    jwt.verify(token, process.env.SECRET, async (err, user)=>{
+      if(err){
+        res.status(500).redirect('/?error=Error+in+verifying+token')
+      }else{
+      req.user = user
+      const guy = await userModel.findById(user.id)
+      if(guy.isAdmin === true && guy.email === "maximilianogbuabor@gmail.com"){
+        next()
+      }else{
+        res.status(500).redirect('/home/?error=Not+a+dev')
+      }}
+    })
+  }else{ 
+    res.status(500).redirect('/home/?error=Error+in+verifying+admin')
+  }
+}
+
 
 

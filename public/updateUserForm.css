@@ -18,7 +18,7 @@
 }
 body{
     background-color: var(--grey-background);
- }
+}
 .wrapper{
     height: 100vh;
     width: 100%;
@@ -26,26 +26,18 @@ body{
     justify-content: center;
     align-items: center;
 }
-.back{
-    text-decoration: none;
-    font-size: 32px;
-    margin-right: 1rem;
-}
 img{
     width: 60px;
     position: absolute;
     top: 8%;
-    left: 6%;
+    right: 6%;
     transform: translate(-50%, -50%);
 }
 a{
     position: absolute;
     top: 6%;
-    right: 4%;
+    left: 4%;
     transform: translate(-50%, -50%); 
-}
-a img{
-    width: 32px
 }
 .success{
     font-size: 16px;
@@ -57,17 +49,6 @@ a img{
     margin: 0 auto;
     border-radius: 5px;
     padding: 4px 2px;
-}
-.success-update{
-    font-size: 16px;
-    text-align: center;
-    color: var(--blue);
-    border: 2px solid var(--blue);
-    background-color: var(--white);
-    width: 50%;
-    margin: 0 auto;
-    padding: 4px 2px;
-    border-radius: 5px;
 }
 .error{
     font-size: 16px;
@@ -83,6 +64,9 @@ a img{
 h1{
     font-size: 18px;
     text-align: center;
+}
+.doc-name{
+    color: var(--blue);
 }
 form{
   display: flex;
@@ -127,7 +111,7 @@ button{
     background-color: var(--grey-text);
     color: var(--white);
     padding: 10px 15px;
-    width: 40%;
+    width: 50%;
     border-radius: 4px;
     margin: 0 auto;
     cursor: pointer;
@@ -139,22 +123,38 @@ button:hover{
 }
 a{
     text-align: right;
+    color: var(--accent);
+}
+.back{
+    text-decoration: none;
+    font-size: 32px;
+    margin-right: 1rem;
     color: var(--grey-text);
 }
-.error-message{
-    font-size: 12px;
+.success{
+    font-size: 16px;
+    text-align: center;
+    color: var(--success);
+    border: 2px solid var(--success);
+    background-color: var(--white);
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 4px 2px;
 }
 @media only screen and (max-width: 760px) {
+    h1{
+        font-size: 16px;
+    }
     form{
         width: 80%;
     }
     img{
         width: 40px;
-        top: 6%;
-      
+        top: 6%; 
     }
     a{
         top: 6%;
-        right: 1%;
+        left: 8%;
     }
 }

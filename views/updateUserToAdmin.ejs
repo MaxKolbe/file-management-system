@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/logo.png" type="image/png">
+    <link rel="stylesheet" href="/updateUserForm.css">
+    <title>Update User | Obrafms</title>
+</head>
+<body>
+    <img src="/images/logo.png" alt="logo">
+    <a href="/home" class="back">&#8678;</a>
+    <div class="wrapper">
+        <form action="/updateUserAdminPut/?_method=PUT" method="post">
+            <% if (req.query.error === "An error occurred during update") { %>
+                <span id="popup" class="error"><%= req.query.error%></h3></span>
+            <% } %>
+            <h1>Update User</h1><br>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter user Email" required>
+                <% if (req.query.error === "No user found") { %>
+                    <p class="error-message" id="popup" style="color: red;"><%= req.query.error %></p>
+                <% } %>
+            </div>
+            <br>       
+            <div>
+                <button type="submit" id="uploadBtn">Update To Admin</button>
+            </div>
+        </form>
+    </div>
+<script>
+    // JavaScript to hide the error message after 3 seconds
+    window.onload = function() {
+        const popup = document.getElementById('popup')
+        console.log("there is an error:", popup)
+        if (popup) {
+            setTimeout(() => {
+                popup.style.display = 'none'
+            }, 3000)
+
+            // Remove query parameters after the success message is displayed
+            const url = new URL(window.location)
+            url.search = '' // Clear the query string
+            window.history.replaceState({}, document.title, url.pathname) // Replace the URL
+        }
+    }
+
+    // JavaScript to prevent multiple form submissions
+    const uploadForm = document.querySelector('form')
+    const uploadBtn = document.getElementById('uploadBtn')
+
+    uploadForm.addEventListener('submit', function() {
+    // Disable the button after the form is submitted
+    uploadBtn.disabled = true
+    uploadBtn.innerText = 'Updating...' // Optional: change button text to indicate progress
+    })
+</script>
+</body>
+</html>

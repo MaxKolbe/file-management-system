@@ -17,7 +17,7 @@
     --error: red; 
 }
 body{
-    border: .15rem solid var(--accent);
+    background-color: var(--grey-background);
 }
 .wrapper{
     height: 100vh;
@@ -83,46 +83,53 @@ form div label{
 }
 form div input{
     padding: 8px 12px;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
+    border: 2px solid var(--grey-text);
+    border-radius: 4px;
 }
 form div input:focus{
-    outline: 2px solid var(--button);
+    outline: 2px solid var(--grey-hover);
 }
 form div input:hover{
     cursor: pointer;
 }
 select {
     padding: 8px 12px;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
+    border: 2px solid var(--grey-text);
+    border-radius: 4px;
 }
 select:focus {
-    outline: 2px solid var(--button);
+    outline: 2px solid var(--grey-hover);
 }
 /* Add background color to options on hover (using pseudo-element) */
 select option:hover {
-    background-color: red; /* Background on hover */
-    color: red;
+    background-color: var(--error); /* Background on hover */
+    color: var(--error);
 }
 button{
+    font-size: 1rem;
     border: none;
-    background-color: var(--button);
+    background-color: var(--grey-text);
     color: var(--white);
-    padding: 8px 12px;
+    padding: 10px 15px;
     width: 40%;
-    border-radius: 6px;
+    border-radius: 4px;
     margin: 0 auto;
     cursor: pointer;
     overflow: hidden;
 }
 button:hover{
-    background-color: var(--accent);
+    background-color: var(--grey-hover);
     transition: .3s;
 }
 a{
     text-align: right;
     color: var(--accent);
+}
+.back{
+    text-decoration: none;
+    font-size: 32px;
+    margin-right: 1rem;
+    color: var(--grey-text);
 }
 .error-message{
     font-size: 12px;

@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="/images/images/logo.png" type="image/png">
     <link rel="stylesheet" href="/login.css"> 
     <title>Login | Obrafms</title>
@@ -19,6 +16,9 @@
             <% } %>
             <% if(req.query.message === "password reset successful") {%>
                 <p id="popup" class="success">Password reset successful</p>
+            <% } %>  
+            <% if(req.query.message === "Logged out successfully") {%>
+                <p id="popup" class="success">Logged out successfully</p>
             <% } %>  
             <div>
                 <label for="email">Email</label>

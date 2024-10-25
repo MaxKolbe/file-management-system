@@ -46,7 +46,7 @@ export const loginPost = async (req, res) => {
                 res.status(200).redirect('/home')
             }else{
                 res.status(404).redirect('/login/?error=Incorrect+password')   
-            } 
+            }  
         }else{
             res.status(404).redirect('/login/?error=No+user+found')  
         }
@@ -56,10 +56,35 @@ export const loginPost = async (req, res) => {
     }  
 } 
 
-// export const logout = (req, res) => {
-//     res.clearCookie("staff")
-//     res.status(200).render("signup")
-// }
+export const updateUserAdminGet = (req, res) =>{
+    res.status(200).render('updateUserToAdmin', { req })
+}
+
+
+export const updateUserAdminPut = async (req, res) =>{
+    const {email} = req.body
+    const user = await userModel.findOne({email})
+    try{
+        if(user){
+            if(user.isAdmin === true){
+                res.status(404).redirect('/home/?error=user+already+admin')  
+            }else{
+                user.isAdmin = true
+                await user.save()
+                res.status(200).redirect('/home?message=success')
+            }
+        }else{
+            res.status(404).redirect('/home/?error=No+user+found')  
+        }
+    }catch(err){
+        res.status(500).redirect('/home/?error=Could+not+update+user')
+    }
+}
+
+export const logout = (req, res) => {
+    res.clearCookie("staff")
+    res.status(200).redirect('/login?message=Logged+out+successfully')
+}
 
 // alternatively
 // const aFunction = (req, res) => {

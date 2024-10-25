@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="/images/logo.png" type="image/png">
     <link rel="stylesheet" href="/updateForm.css">
-    <script src="https://kit.fontawesome.com/5e2b46074f.js" crossorigin="anonymous"></script>
     <title>Update | Obrafms</title>
 </head>
 <body>
     <img src="/images/logo.png" alt="logo">
-    <a href="/uploadForm/history"><i class="fa-solid fa-angle-left"></i> History</a>
+    <a href="/uploadForm/history" class="back">&#8678;</a>
     <div class="wrapper">
         <form action="/updateForm/<%=document.id%>?_method=PUT" method="post">
             <% if (req.query.error === "An error occurred during update") { %>
@@ -102,7 +98,7 @@
     uploadForm.addEventListener('submit', function() {
     // Disable the button after the form is submitted
     uploadBtn.disabled = true
-    uploadBtn.innerText = 'Updatinging...' // Optional: change button text to indicate progress
+    uploadBtn.innerText = 'Updating...' // Optional: change button text to indicate progress
     })
 </script>
 </body>

@@ -11,6 +11,21 @@
     <% if(req.query.error === "Error in verifying admin") {%>
         <p id="popup" class="error">Only admins can Access this Route</p>
     <% } %> 
+    <% if(req.query.error === "user already admin") {%>
+        <p id="popup" class="error">User is already an admin</p>
+    <% } %> 
+    <% if(req.query.error === "Could not update user") {%>
+        <p id="popup" class="error">Could not update user</p>
+    <% } %> 
+    <% if(req.query.error === "No user found") {%>
+        <p id="popup" class="error">No such user found</p>
+    <% } %> 
+    <% if(req.query.error === "Not a dev") {%>
+        <p id="popup" class="error">Only Max can access this route</p>
+    <% } %> 
+    <% if(req.query.message === "success") {%>
+        <p id="popup" class="success">User is now admin</p>
+    <% } %>  
     <div class="container">
         
         <!-- Header with Files title and search bar -->
@@ -22,8 +37,9 @@
             </form>
            <div>
             <a href="/uploadForm" class="icons" title="Upload Document: Admin Only"><img src="/images/upload.png" alt="upload-link"></a>           
-            <a href="/" class="icons" title="Developer Settings: Dev Max Only"><img src="/images/dev.png" alt="dev-pc-settings"></a>
+            <a href="/updateUserAdminGet" class="icons" title="Developer Settings: Dev Max Only"><img src="/images/dev.png" alt="dev-pc-settings"></a>
             <a href="/home" class="icons"><img src="/images/logo.png" alt="logo"></a>
+            <a href="/logout" class="icons" title="Log out"><img src="/images/logout.png" alt="logo"></a>
            </div>
         </div>
         <!-- File results -->

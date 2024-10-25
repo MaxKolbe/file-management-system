@@ -5,6 +5,30 @@ import fileModel from "../models/fileModel.js"
 import dotenv from 'dotenv'
 dotenv.config() 
 
+ //STORAGE DESINATION & FILENAME SETUP
+export const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Extract metadata from the request body
+    const {suitNumber, court, year, typeOfCase } = req.body
+
+    // Construct the directory path using metadata
+    const dir = path.join(process.env.PARENTDIR, typeOfCase, year, court, suitNumber)
+
+    // Create the directory if it doesn't exist
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true }) // Create nested directories
+    }
+
+    // Callback with the constructed directory path
+    cb(null, dir)
+  },
+  filename: (req, file, cb) => {
+    // Use the original file name when saving
+    const originalName = file.originalname
+    cb(null, originalName)
+  }
+})
+
 export const getUploadForm = (req, res) => { 
     res.status(200).render('uploadForm',  {req})
     // res.status(200).render('uploadForm',  { req, message: null })

@@ -107,6 +107,17 @@ h1 {
     border-radius: 5px;
     padding: 8px 12px;
 }
+.success{
+    font-size: 16px;
+    text-align: center;
+    color: var(--success);
+    border: 2px solid var(--success);
+    background-color: var(--white);
+    width: 40%;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 4px 2px;
+}
 
 .no-results {
     text-align: center;
