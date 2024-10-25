@@ -118,9 +118,72 @@ h1 {
     border-radius: 5px;
     padding: 4px 2px;
 }
+.content{
+    color: var(--grey-text);
+}
+.downloadBtn{
+    margin-left: 1rem;
+}
+.mid h5{
+    color: var(--black);
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+    display: none;
+}
 
 .no-results {
     text-align: center;
     color: #777;
     margin-top: 50px;
+}
+
+@media only screen and (max-width: 920px) {
+    .icons img{
+        width: 24px;
+        height: 24px;
+        margin-left: .6rem;
+    }
+    .header h1 {
+        font-size: 2rem;
+        margin-top: 1.2rem;
+    }
+
+}
+@media only screen and (max-width: 740px) {
+    .header h1 {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+    .search-bar {
+        width: 40%;
+    }
+    .search-bar input[type="text"] {
+        width: 90%;
+    }
+    .search-bar button {
+        padding: 10px;
+    }
+}
+@media only screen and (max-width: 550px) {
+    .header h1 {
+        display: none;
+    }
+    .search-bar {
+        width: 50%;
+    }
+    .search-bar input[type="text"] {
+        width: 100%;
+    }
+    .icons img{
+        width: 28px;
+        height: 28px;
+        margin-left: .8rem;
+    }
+    .header{
+        margin-bottom: 20px;
+    }
+    .mid h5{
+        display: block;
+    }
 }

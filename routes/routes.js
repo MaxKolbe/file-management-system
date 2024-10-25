@@ -1,5 +1,5 @@
 import express from 'express'
-import { getHome } from '../controllers/homeController.js'
+import { getHome, downloadFile } from '../controllers/homeController.js'
 import {loginGet, loginPost, signupGet, signupPost, updateUserAdminGet, updateUserAdminPut, logout} from '../controllers/usersController.js'
 import {getUploadForm, getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm, storage} from '../controllers/formControlller.js'
 import {getResetForm, postResetForm, getForgotForm, postForgotForm} from '../controllers/forgotPasswordController.js'
@@ -12,6 +12,7 @@ const router = express.Router()
 
 //HOME PAGE 
 router.get("/home", verifyStaff, getHome)
+router.get("/downloadFile", verifyStaff, downloadFile)
 //USERS
 router.get("/", signupGet)
 router.post("/signup", signupPost) 

@@ -26,7 +26,7 @@
                     <%=document.typeOfCase%> 
                 </h4>
             </div>
-            <form action="/uploadForm/<%=document.id%>?_method=DELETE" method="POST">
+            <form action="/uploadForm/<%=document.id%>?_method=DELETE" method="POST"  onsubmit="return confirmDelete()">
                 <button class="del" type="submit"> Delete </button>
                 <a href="/updateForm/<%=document.id%>">Edit</a>
             </form>
@@ -52,17 +52,20 @@
     <script>
         // JavaScript to hide the success message after 3 seconds
         window.onload = function() {
-            const popup = document.getElementById('popup');
+            const popup = document.getElementById('popup')
             if (popup) {
                 setTimeout(() => {
-                    popup.style.display = 'none';
-                }, 3000);
+                    popup.style.display = 'none'
+                }, 3000)
 
                 // Remove query parameters after the success message is displayed
-                const url = new URL(window.location);
-                url.search = ''; // Clear the query string
-                window.history.replaceState({}, document.title, url.pathname); // Replace the URL
+                const url = new URL(window.location)
+                url.search = '' // Clear the query string
+                window.history.replaceState({}, document.title, url.pathname)// Replace the URL
             }
+        }
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this file? This action is permanent and cannot be undone.")
         }
     </script>
 </body>
