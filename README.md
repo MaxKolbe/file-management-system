@@ -1,41 +1,50 @@
-# File Managment System (Version 1)
--Version 1 serves as the basic form of the project, with only signup/login features and document upload to the database
+# Local File Managment System (V1.0.0)
+This is a File Management System (FMS), built with Node.js designed to organize, manage, and facilitate access to files across multiple devices(clients) locally. It also supports file search functionality, ideal for small offices and teams. 
 
-This is the documentation for a file management system I am building. 
-It will also serve as a reservoir for documenting common errors I encounter and/or solve/ 
+##  Quick-Start
+-   Clone the repository, `git clone <repository-url>`
+-   Navigate to the project directory and install dependencies, `npm install`
+-   Run the server, `node server.js`
+>   Note: This project requires a few dotenv variables.  To see what to include in your .env file click [here](#dotenv)
 
-## Table of contents
-- [Overview](#overview)
-- [My Process](#my-process)
-    - [Built with](#built-with)
-    - [Database](#database)
-- [Errors](#errors)
+## Content
+1.  [Overview](#overview)
+2.  [Build Stack](#build-stack)
+    - [Dotenv](#dotenv)
+5.  [Features](#features)
+4.  [Setting Up Local Server](#setting-up-local-server)
+    - [Windows Task Manager](#windows-task-manager)
+    - [IP Router Set-up](#ip-router-setup)
 
 ## Overview
-The purpose of this project is to server as a file management system for a business. 
-The features (will be added as I build) include:
-- Uploading Files to the database
-- Retrieving Files
+This app is a file management system...to be continued
+
+## Build Stack
+-   Node.js
+-   Express 
+-   Mongodb (Database)
+>   Dependencies: Find a list of dependencies in the package.json file
+
+### Dotenv
+-   PORT 
+    > 3000 will work fine 
+-   OFFICECODE
+    > Create a code for your office or team to enable only members from your office/team to sign up and access your files, e.g. `OFFICECODE = "0824635"`
+-   DATABASEURL
+    > Mongodb connection string
+-   SECRET
+    > Jwt secret. Make sure to use a long string.
+-   PARENTDIR
+    > Parent folder directory for file storage on your server, e.g. `PARENTDIR = "C:\Users\Username\Documents\FMS-STORAGE"`
+-   EMAIL
+    > Nodemailer is used in the project for sending emails. Feel free to disreqard any feature requiring emails. But provide an email that will act as a sender if you choose to use it. 
+-   EPASSWORD 
+    > The email password should be included
+-   HOST
+    > This might be required depending on your email service provider. For more details on Nodemailer visit the [Nodemailer Website](https://nodemailer.com/)
 
 
-## My Process
+<!-- ![](./public/Images/s2.png)  -->
 
-### Built with
--nodejs
--express
--mongodb
--Dependencies can be found in the package.json
 
-### Database
-I figured how to connect to my monggose database. 
-That is: retrieve the url, and connect. 
-I made sure to retrieve the correct url and end it with the database name, in this case: "FMS" i.e 'mongodb+srv://info:password@clustername.mongodb.net/FMS'
-![](./public/Images/s1.png) 
-![](./public/Images/s2.png) 
-
-## Errors
-1. Cannot GET/POST/PUT/DELETE
--This is probably a routing issue. Check routes, naming (ensure they end in .js)
-2. ejs template cannot recognize a variable
-=Send the variable as a null or empty string in the Get request i.e res.render('home', {message: null})
  

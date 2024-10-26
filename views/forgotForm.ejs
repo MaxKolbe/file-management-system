@@ -37,7 +37,7 @@
             </div>
             <br>
             <div>
-                <button type="submit">Send Mail</button>
+                <button type="submit" id="uploadBtn">Send Mail</button>
             </div>
         </form>
     </div>
@@ -57,6 +57,16 @@
             window.history.replaceState({}, document.title, url.pathname) // Replace the URL
         }
     }
+
+    // JavaScript to prevent multiple form submissions
+    const uploadForm = document.querySelector('form')
+    const uploadBtn = document.getElementById('uploadBtn')
+
+    uploadForm.addEventListener('submit', function() {
+    // Disable the button after the form is submitted
+    uploadBtn.disabled = true
+    uploadBtn.innerText = 'Sending...' // Optional: change button text to indicate progress
+    })
 </script>
 </body>
 </html>

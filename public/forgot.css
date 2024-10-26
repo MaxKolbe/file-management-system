@@ -75,17 +75,26 @@ button:hover{
     transition: .3s;
 }
 .error-message{
-    font-size: 12px;
+    font-size: 16px;
+    text-align: center;
+    color: var(--error);
+    border: 2px solid var(--error);
+    background-color: var(--white);
+    width: 40%;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 8px 12px;
 }
 .success{
     font-size: 16px;
     text-align: center;
-    color: var(--white);
-    background-color: var(--success);
+    color: var(--success);
+    border: 2px solid var(--success);
+    background-color: var(--white);
     width: 50%;
     margin: 0 auto;
+    border-radius: 5px;
     padding: 4px 2px;
-    border-radius: 6px;
 }
 .internet{
     font-size: 12px;
