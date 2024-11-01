@@ -13,6 +13,12 @@
     <% if(req.query.message === "success") { %>
         <p id="popup" class="deleteSuccess">Document Deleted Successfully</p>
     <% } %>  
+    <% if(req.query.message === "update success") { %>
+        <p id="popup" class="updateSuccess">Document Updated Successfully</p>
+    <% } %>  
+    <% if (req.query.error) { %>
+        <p id="popup" class="deleteSuccess"><%= req.query.error%></p>
+    <% } %>
     <h1>File Upload History</h1>
     <ul>
         <% documents.forEach(document => { %>

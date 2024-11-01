@@ -27,13 +27,15 @@ router.post("/forgotPassword", postForgotForm)
 router.get("/resetPassword/:id", getResetForm)
 router.post("/resetPassword/:id", postResetForm)
 //MULTER INIT
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage })
+// Configure multer for file updates if needed
+const update = multer({ storage: storage })  
 //FILES
 router.get("/uploadForm", verifyStaffAndAdmin, getUploadForm)
 router.post("/uploadForm", verifyStaffAndAdmin, upload.single('file'), postUploadForm)
 router.get("/uploadForm/history", verifyStaffAndAdmin, getFormHistory)
 router.get("/updateForm/:id", verifyStaffAndAdmin, getUpdateForm)
-router.put("/updateForm/:id", verifyStaffAndAdmin, updateForm)
+router.put("/updateForm/:id", verifyStaffAndAdmin, update.single('file'), updateForm)
 router.delete("/uploadForm/:id", verifyStaffAndAdmin, deleteForm)
 
 export default router   

@@ -1,11 +1,11 @@
-import multer from "multer";
-import path from "path";
+import multer from "multer"
+import path from "path"
 import fs from "fs"
 import fileModel from "../models/fileModel.js"
 import dotenv from 'dotenv'
 dotenv.config() 
 
- //STORAGE DESINATION & FILENAME SETUP
+//STORAGE DESINATION & FILENAME SETUP
 export const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Extract metadata from the request body
@@ -37,20 +37,18 @@ export const getUploadForm = (req, res) => {
 //res.redirect() will return a status code of 302 regardless of what you specify
 export const postUploadForm = async (req, res) => {
     try {
-        // Any additional metadata
-        const { typeOfCase, year, court, suitNumber, tags } = req.body // Example form fields for metadata
+        const { typeOfCase, year, court, suitNumber, tags } = req.body 
 
         if(!typeOfCase || !year || !court || !suitNumber){ 
             res.status(400).redirect('/uploadForm?error=Fill+all+form+fields!')
         }
         
         // Extract file information
-        const filePath = req.file.path // Path to the file in  local system
-        const fileSize = req.file.size // File size in bytes
-        const fileName = req.file.filename // Stored file name
-        const fileType = path.extname(req.file.originalname) // File type 
+        const filePath = req.file.path // Local Path
+        const fileSize = req.file.size // Bytes
+        const fileName = req.file.filename 
+        const fileType = path.extname(req.file.originalname) 
 
-        // Store metadata in MongoDB
         const fileData = new fileModel({
             fileName,
             filePath,
@@ -70,63 +68,72 @@ export const postUploadForm = async (req, res) => {
         console.error(err)
         res.status(500).redirect('/uploadForm?error=An+error+occurred+during+upload')
     }
-} 
+}  
 
 export const getUpdateForm = async (req, res) => {
     const id = req.params.id  
     const document = await fileModel.findById(id)
     res.status(201).render("updateForm", {document, req}) 
 }
-
-/*********************************************************/
+  
 export const updateForm = async (req, res) => {
-    const id = req.params.id;
-    const updateData = {};
-    
-    // Find the existing document
-    const existingDocument = await fileModel.findById(id);
-    if (!existingDocument) {
-        return res.status(404).send('Document not found');
-    }
+   try {
+        const { id } = req.params
+        const { typeOfCase, year, court, suitNumber } = req.body
+        const file = req.file
 
-    // Check for fields in the request body and update them
-    if (req.body.fileName) updateData.fileName = req.body.fileName;
-    if (req.body.suitNumber) updateData.suitNumber = req.body.suitNumber;
-    if (req.body.court) updateData.court = req.body.court;
-    if (req.body.year) updateData.year = req.body.year;
-    if (req.body.typeOfCase) updateData.typeOfCase = req.body.typeOfCase;
+        // Find the existing document
+        const document = await fileModel.findById(id)
+        if (!document) {
+            return res.status(404).send('Document not found')
+        }
 
-    // Check if a new file is being uploaded
-    if (req.file) {
-        // Construct the old file path
-        const oldFilePath = path.join(
+        const oldFilePath = path.join( document.filePath) // Current file location
+        const fileName = file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded else use old name
+        const newFilePath = path.join(
             process.env.PARENTDIR,
-            existingDocument.fileName,
-            existingDocument.suitNumber,
-            existingDocument.court,
-            existingDocument.year.toString(),
-            existingDocument.typeOfCase
-        );
-
-        fs.unlink(oldFilePath, (err) => {
-            if (err) {
-                console.error('Failed to delete old file:', err);
-                return res.status(500).send('Error deleting old file');
+            typeOfCase || document.typeOfCase,
+            year || document.year,
+            court || document.court,   
+            suitNumber || document.suitNumber,
+            file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded, else old one
+        )
+ 
+        // Ensure the old file exists
+        if (!fs.existsSync(oldFilePath)) {
+            return res.status(404).send('Original file not found')
+        }
+        
+        // Move the file if the path has changed
+        if (oldFilePath !== newFilePath) {
+            // Ensure the new directory structure exists
+            fs.mkdirSync(path.dirname(newFilePath), { recursive: true })
+            
+            // Move file to the new path if a new file is uploaded
+            if (file) {
+                fs.renameSync(file.path, newFilePath) // Move uploaded file to new location
+                fs.unlinkSync(oldFilePath) // Delete old file
+            } else {
+                fs.renameSync(oldFilePath, newFilePath) // Move old file if path changed
             }
-        });
+        }
 
-        // Update the updateData object with the new file info
-        updateData.filePath = req.file.path; // Set new file path to the database
-    }
-    try {
-        await fileModel.findByIdAndUpdate(id, updateData, { new: true });
-        res.status(200).redirect('/uploadForm/history?message=update_successful');
+        // Update database 
+        await fileModel.findByIdAndUpdate(id, {
+            filePath: newFilePath,
+            typeOfCase,
+            year,
+            court,
+            suitNumber, 
+            fileName
+        })
+
+        res.status(200).redirect('/uploadForm/history?message=update+success')
     } catch (error) {
-        console.error('Error updating document:', error);
-        res.status(500).send('Error updating document');
+        console.error(error)
+        res.status(500).redirect(`/uploadForm/history?error=An+error+occurred+during+update`)
     }
-}  
-/*********************************************************/
+}   
 
 export const deleteForm = async (req, res) => {
       const id = req.params.id;
@@ -135,7 +142,7 @@ export const deleteForm = async (req, res) => {
         const document = await fileModel.findById(id)
 
         if (!document) {
-            return res.status(404).send('Document not found')
+            res.status(404).redirect('/uploadForm/history?error=Document+not+found')
         }
 
         const { fileName, suitNumber, court, year, typeOfCase } = document
@@ -152,7 +159,7 @@ export const deleteForm = async (req, res) => {
         fs.unlink(filePath, (err) => {
             if (err) {
                 console.error('Failed to delete file:', err)
-                return res.status(500).send('Error deleting file')
+                res.status(500).redirect('/uploadForm/history?error=Error+deleting+document')
             }
 
             // Delete the document from the database
@@ -162,12 +169,12 @@ export const deleteForm = async (req, res) => {
                 })
                 .catch((err) => {
                     console.error('Error deleting document from database:', err)
-                    res.status(500).send('Error deleting document from database')
+                    res.status(500).redirect('/uploadForm/history?error=Error+deleting+document')
                 });
         })
-    } catch (error) {
-        console.error('Error in deleteForm:', error)
-        res.status(500).send('Internal server error')
+    } catch(err) {
+        console.error('Error in deleteForm:', err)
+        res.status(500).redirect('/uploadForm/history?error=Internal+server+error')
     }
 }
  
@@ -196,30 +203,8 @@ export const getFormHistory = async (req, res) => {
         console.error(err);
         res.status(500).send("Error fetching documents");
     }
-};
+}
 
-// export const deleteForm = async (req, res) => {
-//     const id = req.params.id
-//     await fileModel.findByIdAndDelete(id)
-//     res.status(201).redirect('/uploadForm/history?message=success')
-// }
-
-//res.redirect() will return a status code of 302 regardless of what you specify
-// export const postUploadForm = async (req, res) => {
-//     const {documentName, suitNumber, year, typeOfCase, court, fileType, url} = req.body
-//     try{
-//         if(!documentName || !suitNumber || !year || !typeOfCase || !court || !fileType || !url){
-//            res.status(400).redirect('/uploadForm?error=Fill+all+form+fields!')
-//         }else{
-//             await fileModel.create({documentName, suitNumber, year, typeOfCase, court, fileType, url})
-//             res.status(201).redirect('/uploadForm?message=success')
-//             // res.status(201).render('uploadForm', {message: "Successful upload"})
-//         }
-//     }catch(err){ 
-//         console.error(err);
-//         res.status(500).redirect('/uploadForm?error=An+error+occurred+during+upload')
-//     }
-// }
 
 // export const updateForm = async (req, res) => {
 //     const id = req.params.id 
@@ -239,3 +224,65 @@ export const getFormHistory = async (req, res) => {
 //         res.status(500).redirect(`/updateForm/${id}?error=An+error+occurred+during+update`)
 //     }
 // }  
+
+// export const updateForm = async (req, res) => {
+//     try {
+//          const { id } = req.params
+//          const { typeOfCase, year, court, suitNumber } = req.body
+//          const file = req.file
+ 
+//          // Find the existing document
+//          const document = await fileModel.findById(id)
+//          if (!document) {
+//              return res.status(404).send('Document not found')
+//          }
+ 
+//          const oldFilePath = path.join( document.filePath) // Current file location
+//          const fileName = file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded
+//          const newFilePath = path.join(
+//              process.env.PARENTDIR,
+//              typeOfCase,
+//              year,
+//              court,  
+//              suitNumber,
+//              file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded, else old one
+//          )
+ 
+//          // Ensure the old file exists
+//          if (!fs.existsSync(oldFilePath)) {
+//              return res.status(404).send('Original file not found')
+//          }
+         
+//          // Move the file if the path has changed
+//          if (oldFilePath !== newFilePath) {
+//              // Ensure the new directory structure exists
+//              fs.mkdirSync(path.dirname(newFilePath), { recursive: true })
+             
+//              // Move file to the new path if a new file is uploaded
+//              if (file) {
+//                  console.log("there is file")
+//                  fs.renameSync(file.path, newFilePath) // Move uploaded file to new location
+//                  fs.unlinkSync(oldFilePath) // Delete old file
+//              } else {
+//                  fs.renameSync(oldFilePath, newFilePath) // Move old file if path changed
+//                  console.log("there is no file")
+//              }
+//          }
+ 
+//          // Update database 
+//          await fileModel.findByIdAndUpdate(id, {
+//              fileName,
+//              suitNumber, 
+//              court,
+//              year,
+//              typeOfCase,
+//              filePath: newFilePath
+//          })
+ 
+//          res.status(200).redirect('/uploadForm/history?message=update+success')
+//      } catch (error) {
+//          console.error(error)
+//          res.status(500).redirect(`/uploadForm/history?error=An+error+occurred+during+update`)
+//      }
+//  }   
+ 

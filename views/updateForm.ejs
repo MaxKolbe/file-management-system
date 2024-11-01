@@ -11,10 +11,7 @@
     <img src="/images/logo.png" alt="logo">
     <a href="/uploadForm/history" class="back">&#8678;</a>
     <div class="wrapper">
-        <form action="/updateForm/<%=document.id%>?_method=PUT" method="post">
-            <% if (req.query.error === "An error occurred during update") { %>
-                <span id="popup" class="error"><%= req.query.error%></h3></span>
-            <% } %>
+        <form action="/updateForm/<%=document.id%>?_method=PUT" method="post" enctype="multipart/form-data">
             <h1>Update File "<span class="doc-name"><%=document.fileName%></span>"</h1><br>
             <div>
                 <label for="typeOfCase">Type of case</label>
@@ -22,9 +19,9 @@
                     <option value="" disabled selected hidden>Type of case</option>
                     <!-- <option value="Templates">Templates</option> -->
                     <option value="Property">Property</option>
-                    <option value="Libel & Defamation">Libel & Defamation</option>
+                    <option value="Libel and Defamation">Libel and Defamation</option>
                     <option value="Land">Land</option>
-                    <option value="Land & Succession">Land & Succession</option>
+                    <option value="Land and Succession">Land and Succession</option>
                     <option value="Fundamental Human Rights">Fundamental Human Rights</option>
                     <option value="Contract">Contract</option>
                     <option value="Chieftancy">Chieftancy</option>
@@ -57,7 +54,7 @@
             <br>
             <div>
                 <label for="suitNumber">Suit Number</label>
-                <input type="text" id="suitNumber" name="suitNumber" placeholder="Suit Number">
+                <input type="text" id="suitNumber" name="suitNumber" placeholder="Suit Number" required>
             </div>
             <br>
             <div>
