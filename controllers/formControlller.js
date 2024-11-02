@@ -129,8 +129,8 @@ export const updateForm = async (req, res) => {
         })
 
         res.status(200).redirect('/uploadForm/history?message=update+success')
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).redirect(`/uploadForm/history?error=An+error+occurred+during+update`)
     }
 }   
@@ -204,7 +204,6 @@ export const getFormHistory = async (req, res) => {
         res.status(500).send("Error fetching documents");
     }
 }
-
 
 // export const updateForm = async (req, res) => {
 //     const id = req.params.id 

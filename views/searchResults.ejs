@@ -26,14 +26,11 @@
     <% if(req.query.error === "Error downloading file") {%>
         <p id="popup" class="error">Error downloading file</p>
     <% } %> 
-    <% if(req.query.error === "error during search") {%>
-        <p id="popup" class="error">Error occured during search</p>
-    <% } %> 
     <% if(req.query.message === "success") {%>
         <p id="popup" class="success">User is now admin</p>
     <% } %>  
-    <div class="container">     
-        <!-- Header with Files title and search bar -->
+    <div class="container">      
+        <!-- Header with search bar -->
         <div class="header">
             <h1>Documents</h1>
             <form class="search-bar" action="/search" method="POST">
@@ -47,25 +44,24 @@
             <a href="/logout" class="icons" title="Log out"><img src="/images/logout.png" alt="logo"></a>
            </div>
         </div>
-        <!-- File results -->
-         <span class="mid"><h5>Documents</h5></span>
-        <div >
-            <h2 class="content">Contents of: <%= relativePath || 'Root Directory' %></h2>
+        <!-- File results -->       
+        <h2>Search Results:</h2>
+        <% if (folderContents.length > 0) { %>
             <ul>
                 <% folderContents.forEach(item => { %>
                     <li class="file-item">
-                        <% if (item.isFolder) { %>
-                            <img src="/images/folder.png" alt="Folder Icon" />
-                            <a href="?path=<%= item.path %>"><%= item.name %></a>
-                        <% } else { %>
-                            <img src="/images/file.png" alt="File Icon" />
-                            <p><%= item.name %></p>
-                            <a href="/downloadFile?path=<%= item.path %>" title="Download"><img src="/images/download.png" alt="download button" class="downloadBtn"></a>
-                        <% } %>
+                        <img src="/images/file.png" alt="File Icon" />
+                        <p><%= item.fileName %></p>
+                        <a href="/downloadFile?path=<%= item.filePath %>" title="Download">
+                            <img src="/images/download.png" alt="download button" class="downloadBtn">
+                        </a>
                     </li>
                 <% }) %>
             </ul>
-        </div>
+        <% } else { %>
+            <p>No files matched your search criteria.</p>
+            <p class="go-home"><a href="/home">Go home?</a></p>
+        <% } %>
     </div>
       
 <script>
