@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import fileModel from "../models/fileModel.js"
+import templateModel from '../models/templateModel.js'
 
 //Render Home View
 export const getHome = async (req, res) => {
@@ -53,7 +54,7 @@ export const searchFiles = async (req, res) => {
         }
     
         //Search across fields using $or and $regex for partial matches
-        const searchResults = await fileModel.find({
+        const fileSearchResults = await fileModel.find({
             $or: [ 
                 { fileName: { $regex: query, $options: 'i' } },
                 { typeOfCase: { $regex: query, $options: 'i' } },
@@ -62,7 +63,17 @@ export const searchFiles = async (req, res) => {
                 { suitNumber: { $regex: query, $options: 'i' } },
                 { tags: { $regex: query, $options: 'i' } }
             ]
+        }) 
+        
+        const templateSearchResults = await templateModel.find({
+            $or: [ 
+                { fileName: { $regex: query, $options: 'i' } },
+                { typeOfCase: { $regex: query, $options: 'i' } },
+                { templateFolder: { $regex: query, $options: 'i' } }
+            ]
         })
+
+        const searchResults =  [...fileSearchResults, ...templateSearchResults]//concatenates two arrays
  
         // console.log("Database SR:", searchResults)
 

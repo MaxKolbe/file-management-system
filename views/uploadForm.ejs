@@ -9,8 +9,8 @@
 </head>
 <body>
     <img src="/images/logo.png" alt="logo">
-    <a href="/home" title="Home" class="back">&#8678;</a>
-    <a href="/uploadForm/history" title="File Upload History"><img src="/images/file-history.png" alt="History Link"></a>
+    <a href="/home" title="Home" class="back font">&#8678;</a>
+    <a href="/uploadForm/history" title="File Upload History" class="font"><img src="/images/file-history.png" alt="History Link"></a>
     <div class="wrapper">
         <form action="/uploadForm" method="post" enctype="multipart/form-data">
             <% if(req.query.message === "success") {%>
@@ -82,8 +82,13 @@
             <div>
                 <button type="submit" id="uploadBtn">Upload</button>
             </div>
-        </form>
+            <br>
+            <div>
+                <a href="/template" class="template">Upload Template?</a>
+            </div>
+        </form>       
     </div>
+    
 <script>
     // JavaScript to hide the error message after 3 seconds
     window.onload = function() {

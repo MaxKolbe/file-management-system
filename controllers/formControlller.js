@@ -46,7 +46,7 @@ export const storage = multer.diskStorage({
       const originalName = file.originalname
       cb(null, originalName)
     }
-  });  
+})
 
 export const getUploadForm = (req, res) => { 
     res.status(200).render('uploadForm',  {req})

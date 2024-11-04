@@ -3,9 +3,10 @@ import {getHome, downloadFile, searchFiles} from '../controllers/homeController.
 import {loginGet, loginPost, signupGet, signupPost, updateUserAdminGet, updateUserAdminPut, logout} from '../controllers/usersController.js'
 import {getUploadForm, getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm, storage} from '../controllers/formControlller.js'
 import {getResetForm, postResetForm, getForgotForm, postForgotForm} from '../controllers/forgotPasswordController.js'
+import { getTemplateForm, postTemplateForm, templateStorage} from '../controllers/templateController.js'
 import {verifyStaff, verifyStaffAndAdmin, verifyStaffAdminAndDev} from '../middleware/authenticate.js'
 import multer from "multer";
-
+ 
 const router = express.Router() 
 
 //HOME PAGE 
@@ -36,5 +37,10 @@ router.get("/uploadForm/history", verifyStaffAndAdmin, getFormHistory)
 router.get("/updateForm/:id", verifyStaffAndAdmin, getUpdateForm)
 router.put("/updateForm/:id", verifyStaffAndAdmin, update.single('file'), updateForm)
 router.delete("/uploadForm/:id", verifyStaffAndAdmin, deleteForm)
+//MULTER INIT TEMPLATE
+const upTemp = multer({ storage: templateStorage})
+//TEMPLATES
+router.get("/template", verifyStaffAndAdmin, getTemplateForm)
+router.post("/template", verifyStaffAndAdmin, upTemp.single('file'), postTemplateForm)
 
 export default router   
