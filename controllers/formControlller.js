@@ -7,27 +7,46 @@ dotenv.config()
  
 //STORAGE DESINATION & FILENAME SETUP
 export const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Extract metadata from the request body
-    const {suitNumber, court, year, typeOfCase } = req.body
-
-    // Construct the directory path using metadata
-    const dir = path.join(process.env.PARENTDIR, typeOfCase, year, court, suitNumber)
-
-    // Create the directory if it doesn't exist
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true }) // Create nested directories
+    destination: async (req, file, cb) => {
+      try {
+        // Retrieve metadata from req.body
+        const { id } = req.params
+        let { suitNumber, court, year, typeOfCase } = req.body
+  
+        // If metadata is missing, retrieve the existing document's metadata from the database
+        if (!suitNumber || !court || !year || !typeOfCase) {
+          const document = await fileModel.findById(id)
+          if (!document) {
+            return cb(new Error("Document not found"), null)
+          }
+  
+          // Use existing document metadata as fallback
+          suitNumber = suitNumber || document.suitNumber
+          court = court || document.court
+          year = year || document.year
+          typeOfCase = typeOfCase || document.typeOfCase
+        }
+  
+        // Construct the directory path using the provided or retrieved metadata
+        const dir = path.join(process.env.PARENTDIR, typeOfCase, year, court, suitNumber)
+  
+        // Create the directory if it doesn't exist
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true })
+        }
+  
+        // Callback with the constructed directory path
+        cb(null, dir)
+      } catch (error) {
+        cb(error, null)
+      }
+    },
+    filename: (req, file, cb) => {
+      // Use the original file name when saving
+      const originalName = file.originalname
+      cb(null, originalName)
     }
-
-    // Callback with the constructed directory path
-    cb(null, dir)
-  },
-  filename: (req, file, cb) => {
-    // Use the original file name when saving
-    const originalName = file.originalname
-    cb(null, originalName)
-  }
-})
+  });  
 
 export const getUploadForm = (req, res) => { 
     res.status(200).render('uploadForm',  {req})
@@ -76,57 +95,55 @@ export const getUpdateForm = async (req, res) => {
     res.status(201).render("updateForm", {document, req}) 
 }
 
-//UPDATE ROUTE
 export const updateForm = async (req, res) => {
-   try {
+    try {
         const { id } = req.params
         const { typeOfCase, year, court, suitNumber } = req.body
         const file = req.file
 
-        // Find the existing document
+        // Find the existing document in the database
         const document = await fileModel.findById(id)
         if (!document) {  
-            return res.status(404).send('Document not found')
+            return res.status(404).redirect(`/uploadForm/history?error=Document+not+found`)
         }
-     
-        const oldFilePath = path.join( document.filePath) // Current file location
-        const fileName = file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded else use old name
+
+        // Set file name based on the uploaded file or use the existing file name
+        const fileName = file ? file.originalname : path.basename(document.filePath)
+
+        // Construct the new file path, using current values if not updated
         const newFilePath = path.join(
             process.env.PARENTDIR,
             typeOfCase || document.typeOfCase,
             year || document.year,
             court || document.court,   
             suitNumber || document.suitNumber,
-            file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded, else old one
-        )
-
-        // Ensure the old file exists
-        if (!fs.existsSync(oldFilePath)) {
-            return res.status(404).send('Original file not found')
-        }
-        
-        // Move the file if the path has changed
-        if (oldFilePath !== newFilePath) {
-            // Ensure the new directory structure exists
-            fs.mkdirSync(path.dirname(newFilePath), { recursive: true })
-            
-            // Move file to the new path if a new file is uploaded
-            if (file) {
-                fs.renameSync(file.path, newFilePath) // Move uploaded file to new location
-                fs.unlinkSync(oldFilePath) // Delete old file
-            } else {
-                fs.renameSync(oldFilePath, newFilePath) // Move old file if path changed
-            }
-        }
-
-        // Update database 
-        await fileModel.findByIdAndUpdate(id, {
-            filePath: newFilePath,
-            typeOfCase, 
-            year,
-            court,
-            suitNumber: suitNumber || document.suitNumber, 
             fileName
+        );
+
+        // Ensure the old file exists before moving or replacing it
+        if (!fs.existsSync(document.filePath)) {
+            return res.status(404).redirect(`/uploadForm/history?error=Original+file+not+found`)
+        }
+
+        // Handle file movement or replacement if a new file is provided or path changes
+        if (file) {
+            // If a new file is uploaded, remove the old file and move the new one
+            fs.renameSync(file.path, newFilePath)
+            fs.unlinkSync(document.filePath) // Remove old file
+        } else if (document.filePath !== newFilePath) {
+            // If only the path has changed, move the existing file to the new path
+            fs.mkdirSync(path.dirname(newFilePath), { recursive: true })
+            fs.renameSync(document.filePath, newFilePath)
+        }
+
+        // Update the document information in the database
+        await fileModel.findByIdAndUpdate(id, {
+            fileName,
+            filePath: newFilePath,
+            typeOfCase: typeOfCase || document.typeOfCase,
+            year: year || document.year,
+            court: court || document.court,
+            suitNumber: suitNumber || document.suitNumber,
         })
 
         res.status(200).redirect('/uploadForm/history?message=update+success')
@@ -134,7 +151,7 @@ export const updateForm = async (req, res) => {
         console.error(err)
         res.status(500).redirect(`/uploadForm/history?error=An+error+occurred+during+update`)
     }
-}   
+}
 
 export const deleteForm = async (req, res) => {
       const id = req.params.id;
@@ -205,84 +222,3 @@ export const getFormHistory = async (req, res) => {
         res.status(500).send("Error fetching documents");
     }
 }
-
-// export const updateForm = async (req, res) => {
-//     const id = req.params.id 
-//     const updateFields = {}
-
-//     if (req.body.typeOfCase) {updateFields.typeOfCase = req.body.typeOfCase}
-//     if (req.body.year) {updateFields.year = req.body.year}
-//     if (req.body.court) {updateFields.court = req.body.court}
-//     if (req.body.suitNumber) {updateFields.suitNumber = req.body.suitNumber}
-//     if (req.body.tags) {updateFields.tags = req.body.tags}
-
-//     try{
-//         await fileModel.findByIdAndUpdate(id,{ $set: updateFields })
-//         res.status(201).redirect('/uploadForm?message=Update+success')
-//     }catch(err){
-//         console.error(err);
-//         res.status(500).redirect(`/updateForm/${id}?error=An+error+occurred+during+update`)
-//     }
-// }  
-
-// export const updateForm = async (req, res) => {
-//     try {
-//          const { id } = req.params
-//          const { typeOfCase, year, court, suitNumber } = req.body
-//          const file = req.file
- 
-//          // Find the existing document
-//          const document = await fileModel.findById(id)
-//          if (!document) {
-//              return res.status(404).send('Document not found')
-//          }
- 
-//          const oldFilePath = path.join( document.filePath) // Current file location
-//          const fileName = file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded
-//          const newFilePath = path.join(
-//              process.env.PARENTDIR,
-//              typeOfCase,
-//              year,
-//              court,  
-//              suitNumber,
-//              file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded, else old one
-//          )
- 
-//          // Ensure the old file exists
-//          if (!fs.existsSync(oldFilePath)) {
-//              return res.status(404).send('Original file not found')
-//          }
-         
-//          // Move the file if the path has changed
-//          if (oldFilePath !== newFilePath) {
-//              // Ensure the new directory structure exists
-//              fs.mkdirSync(path.dirname(newFilePath), { recursive: true })
-             
-//              // Move file to the new path if a new file is uploaded
-//              if (file) {
-//                  console.log("there is file")
-//                  fs.renameSync(file.path, newFilePath) // Move uploaded file to new location
-//                  fs.unlinkSync(oldFilePath) // Delete old file
-//              } else {
-//                  fs.renameSync(oldFilePath, newFilePath) // Move old file if path changed
-//                  console.log("there is no file")
-//              }
-//          }
- 
-//          // Update database 
-//          await fileModel.findByIdAndUpdate(id, {
-//              fileName,
-//              suitNumber, 
-//              court,
-//              year,
-//              typeOfCase,
-//              filePath: newFilePath
-//          })
- 
-//          res.status(200).redirect('/uploadForm/history?message=update+success')
-//      } catch (error) {
-//          console.error(error)
-//          res.status(500).redirect(`/uploadForm/history?error=An+error+occurred+during+update`)
-//      }
-//  }   
- 
