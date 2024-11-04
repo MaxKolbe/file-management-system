@@ -65,6 +65,7 @@ export const getResetForm = async (req, res) => {
         res.status(500).redirect('/forgotPassword/?error=An+error+occurred+during+preset')
     }
 } 
+
 export const postResetForm = async (req, res) => {
     try {
         const user = await userModel.findOne({

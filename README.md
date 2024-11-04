@@ -1,4 +1,4 @@
-# Local File Managment System (V1.0.0)
+# Local File Managment System (V1.1.0) Law Firm Version
 This is a File Management System (FMS), built with Node.js designed to organize, manage, and facilitate access to files across multiple devices(clients) locally. It also supports file search functionality, ideal for small offices and teams. 
 
 ##  Quick-Start

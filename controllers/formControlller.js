@@ -4,7 +4,7 @@ import fs from "fs"
 import fileModel from "../models/fileModel.js"
 import dotenv from 'dotenv'
 dotenv.config() 
-
+ 
 //STORAGE DESINATION & FILENAME SETUP
 export const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -75,7 +75,8 @@ export const getUpdateForm = async (req, res) => {
     const document = await fileModel.findById(id)
     res.status(201).render("updateForm", {document, req}) 
 }
-  
+
+//UPDATE ROUTE
 export const updateForm = async (req, res) => {
    try {
         const { id } = req.params
@@ -84,10 +85,10 @@ export const updateForm = async (req, res) => {
 
         // Find the existing document
         const document = await fileModel.findById(id)
-        if (!document) {
+        if (!document) {  
             return res.status(404).send('Document not found')
         }
-
+     
         const oldFilePath = path.join( document.filePath) // Current file location
         const fileName = file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded else use old name
         const newFilePath = path.join(
@@ -98,7 +99,7 @@ export const updateForm = async (req, res) => {
             suitNumber || document.suitNumber,
             file ? file.originalname : path.basename(oldFilePath) // Use new file name if uploaded, else old one
         )
- 
+
         // Ensure the old file exists
         if (!fs.existsSync(oldFilePath)) {
             return res.status(404).send('Original file not found')
@@ -121,10 +122,10 @@ export const updateForm = async (req, res) => {
         // Update database 
         await fileModel.findByIdAndUpdate(id, {
             filePath: newFilePath,
-            typeOfCase,
+            typeOfCase, 
             year,
             court,
-            suitNumber, 
+            suitNumber: suitNumber || document.suitNumber, 
             fileName
         })
 

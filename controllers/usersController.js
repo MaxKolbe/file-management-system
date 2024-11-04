@@ -60,7 +60,6 @@ export const updateUserAdminGet = (req, res) =>{
     res.status(200).render('updateUserToAdmin', { req })
 }
 
-
 export const updateUserAdminPut = async (req, res) =>{
     const {email} = req.body
     const user = await userModel.findOne({email})
