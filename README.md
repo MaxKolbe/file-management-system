@@ -6,6 +6,7 @@ This is a File Management System (FMS), built with Node.js designed to organize,
 -   Navigate to the project directory and install dependencies, `npm install`
 -   Run the server, `node server.js`
 >   Note: This project requires a few dotenv variables.  To see what to include in your .env file click [here](#dotenv)
+-   You will need to install Mongobd Compass. 
 
 ## Content
 1.  [Overview](#overview)
@@ -15,7 +16,7 @@ This is a File Management System (FMS), built with Node.js designed to organize,
 4.  [Features](#features)
     - [Authentican And Authorization](#authentication-and-authorization)
 5.  [Setting Up Local Server](#setting-up-local-server)
-    - [Windows Task Manager](#windows-task-manager)
+    - [Windows Task Scheduler ](#windows-task-scheduler )
     - [IP Router Set-up](#ip-router-setup)
 
 ## Overview
@@ -82,6 +83,50 @@ It has 3 levels of authorization which can be customized to include more.
     Developer route to check if user is a Developer for special routes that require dev access. Please see middleware>authenticate.js folder/file to customize the criteria for checking if user is a developer.
 
 ## Setting Up Local Server
+### Windows Task Scheduler 
+After installing node and mongodb compass, as well as basic setup, You'll need to turn your local computer into a server. 
 
+To do this, you will be using Windows Task Scheduler to start up your server every time your windows machine is turned on. To do this, follow the following steps:
+
+1. Set up a password for your computer: 
+  
+-  Set up a basic password for your computer. This will come in handy in later steps. 
+
+2. Create a batch script to run your server:
+
+-  Create a .bat file to automate starting the server
+-  Open Notepad and add the following script:
+>  @echo off
+
+>  cd "C:\path\to\your\project" // Change this to the path where your `server.js` is located
+
+>  node server.js
+
+3. Save this file as start-server.bat (or any name) on your desktop or any folder.
+
+4. Open Task Scheduler:
+
+-   Press Win + R and type taskschd.msc, then press Enter.
+
+5. Create a new task:
+
+-   Click Create Task in the right panel.
+-   In the General tab, give the task a name (e.g., "Start Node.js Server").
+-   Select "Run whether user is logged on or not" and check "Run with highest privileges".
+
+6. Set the trigger (when to start the server):
+
+-   Go to the Triggers tab and click New.
+-   Set Begin the task to "At startup" and click OK.
+
+7. Set the action (run the server):
+
+-   Go to the Actions tab and click New.
+-   In the Action field, select "Start a program".
+-   Under Program/script, browse to the location of your start-server.bat file and select it. Click OK.
+
+8. Save the task:
+
+-   Click OK and enter your administrator password (if prompted) This would be the password you set up in [step 1](#windows-task-scheduler)
 
  
