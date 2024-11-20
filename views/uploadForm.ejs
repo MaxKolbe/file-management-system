@@ -28,7 +28,7 @@
             <h1>Upload Documents</h1>
             <div>
                 <label for="typeOfCase">Type of case</label>
-                <select name="typeOfCase" id="typeOfCase">
+                <select name="typeOfCase" id="typeOfCase" required>
                     <option value="" disabled selected hidden>Type of case</option>
                     <!-- <option value="Templates">Templates</option> -->
                     <option value="Property">Property</option>
@@ -43,7 +43,7 @@
             <br>
             <div>
                 <label for="year">Year</label>
-                <select name="year" id="year">
+                <select name="year" id="year" required>
                     <option value="" disabled selected hidden>Year</option>
                     <option value="2024">2024</option>
                     <option value="2023">2023</option>
@@ -55,7 +55,7 @@
             <br>
             <div>
                 <label for="court">Court handling the case</label>
-                <select name="court" id="court">
+                <select name="court" id="court" required>
                     <option value="" disabled selected hidden>Court</option>
                     <option value="Supreme">Supreme</option>
                     <option value="High">High</option>
@@ -84,7 +84,7 @@
             </div>
             <br>
             <div>
-                <a href="/template" class="template">Upload Template?</a>
+                <a href="/custom" class="custom">Upload Custom?</a>
             </div>
         </form>       
     </div>

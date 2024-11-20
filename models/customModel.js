@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const templateSchema = mongoose.Schema({
+const customSchema = mongoose.Schema({
     fileName: {
         type: String,
         required: [true, 'Please provide a file name']
@@ -17,14 +17,14 @@ const templateSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please provide file type']
     }, 
-    typeOfCase: {
+    folderName: { 
         type: String,
-        default: "Template"
+        required: [true, 'Please enter a folder name']
     }, 
-    templateFolder: {
+    fileFolderName: {
         type: String,
-        required: [true, 'Please enter a template folder']
+        required: [true, 'Please enter a file folder name']
     }
 }, {timestamps: true})
 
-export default mongoose.model("templates", templateSchema)
+export default mongoose.model("customs", customSchema)

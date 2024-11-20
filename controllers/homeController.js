@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import fileModel from "../models/fileModel.js"
-import templateModel from '../models/templateModel.js'
+import templateModel from '../models/customModel.js'
 import userModel from "../models/userModel.js"
 import jwt from "jsonwebtoken"
 
@@ -76,8 +76,8 @@ export const searchFiles = async (req, res) => {
         const templateSearchResults = await templateModel.find({
             $or: [ 
                 { fileName: { $regex: query, $options: 'i' } },
-                { typeOfCase: { $regex: query, $options: 'i' } },
-                { templateFolder: { $regex: query, $options: 'i' } }
+                { folderName: { $regex: query, $options: 'i' } },
+                { fileFolderName: { $regex: query, $options: 'i' } }
             ]
         })
 

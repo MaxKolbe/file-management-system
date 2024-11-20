@@ -1,43 +1,43 @@
 import multer from "multer"
 import path from "path"
 import fs from "fs"
-import templateModel from "../models/templateModel.js"
+import customModel from "../models/customModel.js"
 import dotenv from 'dotenv'
 dotenv.config() 
 
-export const templateStorage = multer.diskStorage({
+export const customStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         // Extract metadata from the request body
-        const {templateFolder} = req.body
+        const {folderName, fileFolderName} = req.body
     
         // Construct the directory path using metadata
-        const dir = path.join(process.env.PARENTDIR, "Templates", templateFolder)
+        const dir = path.join(process.env.PARENTDIR, folderName, fileFolderName)
     
         // Create the directory if it doesn't exist
-        if (!fs.existsSync(dir)) {
+        if (!fs.existsSync(dir)) { 
             fs.mkdirSync(dir, { recursive: true }) // Create nested directories
         }
     
-        // Callback with the constructed directory path
+        // Callback with the constructed directory path 
         cb(null, dir)
       },
       filename: (req, file, cb) => {
         // Use the original file name when saving
         const originalName = file.originalname
         cb(null, originalName)
-      }
+    } 
 })
 
-export const getTemplateForm = (req, res) => {
-    res.status(200).render('templateForm',  {req})
+export const getcustomForm = (req, res) => {
+    res.status(200).render('customForm',  {req})
 }
 
-export const postTemplateForm = async (req, res) => {
+export const postcustomForm = async (req, res) => {
     try {
-        const { templateFolder } = req.body 
-
-        if(!templateFolder){ 
-            res.status(400).redirect('/template?error=Fill+all+form+fields!')
+        const { folderName, fileFolderName } = req.body 
+ 
+        if(!folderName || !fileFolderName){ 
+            res.status(400).redirect('/custom?error=Fill+all+form+fields!')
         }
         
         // Extract file information
@@ -46,19 +46,20 @@ export const postTemplateForm = async (req, res) => {
         const fileName = req.file.filename 
         const fileType = path.extname(req.file.originalname) 
 
-        const fileData = new templateModel({
+        const fileData = new customModel({
             fileName,
             filePath,
             fileSize,
             fileType,
-            templateFolder
-        })
+            folderName, 
+            fileFolderName 
+        }) 
 
         await fileData.save()
 
-        res.status(201).redirect('/template?message=success') 
+        res.status(201).redirect('/custom?message=success') 
     } catch (err) {
         console.error(err)
-        res.status(500).redirect('/template?error=An+error+occurred+during+upload')
+        res.status(500).redirect('/custom?error=An+error+occurred+during+upload')
     }
 }

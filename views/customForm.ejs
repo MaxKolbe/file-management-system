@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/logo.png" type="image/png">
     <link rel="stylesheet" href="/uploadForm.css">
-    <title>Template | Obrafms</title>
+    <title>Custom | Obrafms</title>
 </head>
 <body>
     <img src="/images/logo.png" alt="logo">
     <a href="/uploadForm" title="Home" class="back font">&#8678;</a>
     <div class="wrapper">
-        <form action="/template" method="post" enctype="multipart/form-data">
+        <form action="/custom" method="post" enctype="multipart/form-data">
             <% if(req.query.message === "success") {%>
-                <p id="popup" class="success">Template Uploaded Successfully</p>
+                <p id="popup" class="success">Custom Document Uploaded Successfully</p>
             <% } %>  
             <% if(req.query.error === "Fill all form fields!") {%>
                 <p id="popup" class="error">Fill all select form fields!</p>
@@ -22,8 +22,13 @@
                 <span id="popup" class="error"><%= req.query.error%></h3></span>
             <% } %>
             <div>
-                <label for="templateFolder">Template Folder</label>
-                <input type="text" id="templateFolder" name="templateFolder" placeholder="Template Folder" required>
+                <label for="folderName">Folder name</label>
+                <input type="text" id="folderName" name="folderName" placeholder="Folder Name" required>
+            </div>
+            <br>
+            <div>
+                <label for="fileFolderName">Custom Folder Path</label>
+                <input type="text" id="fileFolderName" name="fileFolderName" placeholder="Custom Folder Path" required>
             </div>
             <br>
             <div>

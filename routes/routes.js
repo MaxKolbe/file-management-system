@@ -3,7 +3,7 @@ import {getHome, downloadFile, searchFiles} from '../controllers/homeController.
 import {loginGet, loginPost, signupGet, signupPost, updateUserAdminGet, updateUserAdminPut, logout} from '../controllers/usersController.js'
 import {getUploadForm, getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm, storage} from '../controllers/formControlller.js'
 import {getResetForm, postResetForm, getForgotForm, postForgotForm} from '../controllers/forgotPasswordController.js'
-import { getTemplateForm, postTemplateForm, templateStorage} from '../controllers/templateController.js'
+import { getcustomForm, postcustomForm, customStorage} from '../controllers/customController.js'
 import {verifyStaff, verifyStaffAndAdmin, verifyStaffAdminAndDev} from '../middleware/authenticate.js'
 import multer from "multer";
  
@@ -37,10 +37,10 @@ router.get("/uploadForm/history", verifyStaffAndAdmin, getFormHistory)
 router.get("/updateForm/:id", verifyStaffAndAdmin, getUpdateForm)
 router.put("/updateForm/:id", verifyStaffAndAdmin, update.single('file'), updateForm)
 router.delete("/uploadForm/:id", verifyStaffAndAdmin, deleteForm)
-//MULTER INIT TEMPLATE
-const upTemp = multer({ storage: templateStorage})
-//TEMPLATES
-router.get("/template", verifyStaffAndAdmin, getTemplateForm)
-router.post("/template", verifyStaffAndAdmin, upTemp.single('file'), postTemplateForm)
+//MULTER INIT CUSTOM
+const upCustom = multer({ storage: customStorage})
+//CUSTOM
+router.get("/custom", verifyStaffAndAdmin, getcustomForm)
+router.post("/custom", verifyStaffAndAdmin, upCustom.single('file'), postcustomForm)
 
 export default router   
