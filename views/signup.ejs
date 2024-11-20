@@ -10,7 +10,7 @@
 <body>
     <img src="/images/logo.png" alt="logo">
     <% if (req.query.error === "An error occurred during sign up") { %>
-        <span id="popup" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+        <span id="popup" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
     <% } %>
     <div class="wrapper">
         <form action="/signup" method="post">

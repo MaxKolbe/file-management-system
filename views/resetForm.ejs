@@ -10,10 +10,10 @@
 <body>
     <img src="/images/logo.png" alt="logo">
     <% if (req.query.error === "An error occurred during preset") { %>
-        <span id="popup" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+        <span id="popup" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
     <% } %>
     <% if (req.query.error === "No such user") { %>
-        <span id="popup" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+        <span id="popup" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
     <% } %>
     <div class="wrapper">
         <form action="/resetPassword/<%=token%>" method="post">

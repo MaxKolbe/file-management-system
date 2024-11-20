@@ -2,7 +2,10 @@ import multer from "multer"
 import path from "path"
 import fs from "fs"
 import fileModel from "../models/fileModel.js"
+import userModel from "../models/userModel.js"
+import jwt from "jsonwebtoken"
 import dotenv from 'dotenv'
+
 dotenv.config() 
  
 //STORAGE DESINATION & FILENAME SETUP
@@ -55,6 +58,12 @@ export const getUploadForm = (req, res) => {
 
 //res.redirect() will return a status code of 302 regardless of what you specify
 export const postUploadForm = async (req, res) => {
+    const token = req.cookies.staff
+    const decoded = jwt.verify(token, process.env.SECRET) 
+    const userId = decoded.id
+    const user = await userModel.findById(userId)
+    const lawyer = user.email
+
     try {
         const { typeOfCase, year, court, suitNumber, tags } = req.body 
 
@@ -77,7 +86,8 @@ export const postUploadForm = async (req, res) => {
             year,
             court,
             suitNumber,
-            tags: tags ? tags.split(',') : [] // Split tags by comma if sent as a string
+            tags: tags ? tags.split(',') : [], // Split tags by comma if sent as a string
+            uploadedBy: lawyer
         })
 
         await fileData.save()

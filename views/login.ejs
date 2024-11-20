@@ -12,7 +12,7 @@
     <div class="wrapper">
         <form action="/login" method="post">
             <% if (req.query.error === "An error occurred during login") { %>
-                <span id="popup" class="error-message" style="color: red;"><h3>req.query.error</h3></span>
+                <span id="popup" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
             <% } %>
             <% if(req.query.message === "password reset successful") {%>
                 <p id="popup" class="success">Password reset successful</p>

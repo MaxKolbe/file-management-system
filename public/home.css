@@ -45,7 +45,7 @@ h1 {
     margin-left: .8rem;
 }
 .header h1 {
-    font-size: 2.5rem;
+    font-size: 1rem;
     color: var(--grey-text);
     margin-top: 1rem;
 }
@@ -135,6 +135,16 @@ h1 {
     text-align: center;
     display: none;
 }
+.go-back-button {
+    background-color: var(--grey-text); /* Button color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 5px 10px; /* Padding */
+    margin: 10px 0; /* Spacing */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 20px; /* Font size */
+}
 
 .no-results {
     text-align: center;
@@ -142,21 +152,21 @@ h1 {
     margin-top: 50px;
 }
 
-@media only screen and (max-width: 920px) {
+@media only screen and (max-width: 940px) {
     .icons img{
         width: 24px;
         height: 24px;
         margin-left: .6rem;
     }
     .header h1 {
-        font-size: 2rem;
+        font-size: .8rem;
         margin-top: 1.2rem;
     }
 
 }
-@media only screen and (max-width: 740px) {
+@media only screen and (max-width: 780px) {
     .header h1 {
-        font-size: 1.5rem;
+        font-size: .5rem;
         margin-top: 1rem;
     }
     .search-bar {
@@ -190,4 +200,18 @@ h1 {
     .mid h5{
         display: block;
     }
+}
+@media only screen and (max-width: 440px) {
+    .icons img{
+        width: 24px;
+        height: 24px;
+        margin-left: .4rem;
+    }
+    .container {
+        padding: 10px;
+    }
+    body {
+        padding: 10px;
+    }
+
 }

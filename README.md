@@ -27,7 +27,13 @@ This app runs locally on the server, and uses a server's storage to store files.
 ## Build Stack
 -   Node.js
 -   Express 
--   Mongodb (Database)
+-   Mongodb (Database):
+    Mongodb compass will have to run automatically on every boot up of your system. To ensure it does this follow the following steps:
+    1.  On your windows search bar, search for services and open it.
+    2.  Search for MongoDB Server on the list of services and click on it.
+    3.  Change the Startup type to Automatic.
+    4.  Click Apply and OK.
+    5.  If the service isn't already running click on Start the service.
 >   Dependencies: Find a list of dependencies in the package.json file
 
 ### Dotenv

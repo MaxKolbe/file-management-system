@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import fileModel from "../models/fileModel.js"
 import templateModel from '../models/templateModel.js'
+import userModel from "../models/userModel.js"
+import jwt from "jsonwebtoken"
 
 //Render Home View
 export const getHome = async (req, res) => {
@@ -9,6 +11,12 @@ export const getHome = async (req, res) => {
     const relativePath = req.query.path ? req.query.path : ''
     const basePath = path.join(process.env.PARENTDIR, relativePath)
     const query = " "
+
+    const token = req.cookies.staff
+    const decoded = jwt.verify(token, process.env.SECRET) 
+    const userId = decoded.id
+    const user = await userModel.findById(userId)
+    const lawyer = user.email
 
     try {
         // Read the directory contents
@@ -22,7 +30,7 @@ export const getHome = async (req, res) => {
         }))
 
         // Render the EJS template with the folderContents
-        res.render('home', {req, folderContents, relativePath, query})
+        res.render('home', {req, folderContents, relativePath, lawyer, query})
     } catch (err) {
         console.error('Error reading directory:', err)
         res.status(500).send('Error reading directory')

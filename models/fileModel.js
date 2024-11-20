@@ -35,6 +35,9 @@ const fileSchema = mongoose.Schema({
     },
     tags: {
         type: Array
+    },
+    uploadedBy: {
+        type: String
     }
 }, {timestamps: true})
 

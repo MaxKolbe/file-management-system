@@ -32,10 +32,11 @@
     <% if(req.query.message === "success") {%>
         <p id="popup" class="success">User is now admin</p>
     <% } %>  
-    <div class="container">     
+    <div class="container"> 
+        <!-- <span class="mid"><h5>Documents</h5></span>     -->
         <!-- Header with Files title and search bar -->
         <div class="header">
-            <h1>Documents</h1>
+            <h1>Hello,<br><%= lawyer %></h1>
             <form class="search-bar" action="/search" method="POST">
                 <input type="text" name="longquery" placeholder="Search for a file..." required>
                 <button type="submit">Search</button>
@@ -47,10 +48,14 @@
             <a href="/logout" class="icons" title="Log out"><img src="/images/logout.png" alt="logo"></a>
            </div>
         </div>
-        <!-- File results -->
-         <span class="mid"><h5>Documents</h5></span>
+        <!-- Files -->
         <div >
-            <h2 class="content">Contents of: <%= relativePath || 'Root Directory' %></h2>
+            <div>
+                <% if (relativePath) { %> <!-- Only render the button if there is a relativePath -->
+                    <button class="go-back-button" onclick="goBack()">&#8678;</button>
+                <% } %>
+            </div>
+            <h2 class="content">Documents in <%= relativePath || 'Root Directory' %></h2>
             <ul>
                 <% folderContents.forEach(item => { %>
                     <li class="file-item">
@@ -83,6 +88,10 @@
             url.search = '' // Clear the query string
             window.history.replaceState({}, document.title, url.pathname) // Replace the URL
         }
+    }
+    function goBack() {
+        // Navigate back to the previous page in history
+        window.history.back();
     }
 </script>
 </body>
