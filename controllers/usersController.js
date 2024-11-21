@@ -80,6 +80,26 @@ export const updateUserAdminPut = async (req, res) =>{
     }
 }
 
+export const updateUserSuperAdminPut = async (req, res) =>{
+    const {email} = req.body
+    const user = await userModel.findOne({email})
+    try{
+        if(user){
+            if(user.isSuperAdmin === true){
+                res.status(404).redirect('/home/?error=user+already+superadmin')  
+            }else{
+                user.isSuperAdmin = true
+                await user.save()
+                res.status(200).redirect('/home?message=success+superadmin')
+            }
+        }else{
+            res.status(404).redirect('/home/?error=No+user+found')  
+        }
+    }catch(err){
+        res.status(500).redirect('/home/?error=Could+not+update+user')
+    }
+}
+
 export const logout = (req, res) => {
     res.clearCookie("staff")
     res.status(200).redirect('/login?message=Logged+out+successfully')

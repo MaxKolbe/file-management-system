@@ -17,7 +17,7 @@ This is a File Management System (FMS), built with Node.js designed to organize,
     - [Authentican And Authorization](#authentication-and-authorization)
 5.  [Setting Up Local Server](#setting-up-local-server)
     - [Windows Task Scheduler ](#windows-task-scheduler )
-    - [IP Router Set-up](#ip-router-setup)
+    - [IP Router Setup](#ip-router-setup)
 
 ## Overview
 This app is a file management system. V1.1.0 is built specifically for Law Firms, a general template version for other small businesses will be made available on another branch.
@@ -84,9 +84,9 @@ It has 3 levels of authorization which can be customized to include more.
 2. verifyStaffAndAdmin
 
     Auth function to check if user is Admin. For routes that require Admin priveledges like upload and update routes. 
-3. verifyStaffAdminAndDev
+3. verifyStaffAdminAndSuperAdmin
 
-    Developer route to check if user is a Developer for special routes that require dev access. Please see middleware>authenticate.js folder/file to customize the criteria for checking if user is a developer.
+    SuperAdmin route to check if user is a SuperAdmin for special routes that require SuperAdmin access. 
 
 ## Setting Up Local Server
 ### Windows Task Scheduler 
@@ -134,5 +134,40 @@ To do this, you will be using Windows Task Scheduler to start up your server eve
 8. Save the task:
 
 -   Click OK and enter your administrator password (if prompted) This would be the password you set up in [step 1](#windows-task-scheduler)
+
+### IP Router Setup
+To connect other clients to the server locally, both clients and servers should be connected on the same network. Ideally this should be done using a router, so that the connection url for other clients will be `http://IP-ADDRESS-OF-SERVER:3000` 
+
+The IP Address of the server changes dynamically on every reconnection to the router. Therefore, to avoid this and give the server connection string a constant url, you will have to assign the server a static IP Adress
+
+This process varies among different routers but the basic idea is the same. In this case, we will be using a Digicom Router to set up: 
+
+> make sure your server is connected to the router before proceeding with this step
+
+1. Navigate to the web interface of the router using the defualt gateway:
+
+    You can find this gateway written on the rouer or you can navigate to your control panel > network and sharing center > active network 
+
+    Clicking on the active network will bring out details of the network. You can then copy the connection string onto a browser. Then log in using the default username and password. 
+    ![](./public/Images/a.jpeg)
+
+2. Navigate to advanced settings and LAN/Network settings
+    ![](./public/Images/b.jpeg)
+    ![](./public/Images/c.jpeg)
+
+3. Click on reserve static IP or whatever is analogous to it depending on your router, here it says Add Entries under Static IP Lease
+    ![](./public/Images/c.jpeg)
+
+4. You'll be prompted to write the MAC Address of your server and the Static IP Address you want to assign your server. 
+    ![](./public/Images/d.jpeg)
+
+To find your MAC addess, navigate to your control panel > network and sharing center > active network. Clicking on the active network will bring out details of your network and PC including the Mac address (Physical Address)
+    ![](./public/Images/e.jpeg)
+
+For the Static IP address you'll chose, it's best to just change the last 3 numbers of your cureent IP Adress i.e 192.168.1.100
+
+5. After inputting the details click on Apply/Save. And now, your server will use the same IP Address whenever it is connected to the router.
+    ![](./public/Images/f.jpeg)
+
 
  

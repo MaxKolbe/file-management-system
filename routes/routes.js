@@ -1,10 +1,10 @@
 import express from 'express'
 import {getHome, downloadFile, searchFiles} from '../controllers/homeController.js'
-import {loginGet, loginPost, signupGet, signupPost, updateUserAdminGet, updateUserAdminPut, logout} from '../controllers/usersController.js'
+import {loginGet, loginPost, signupGet, signupPost, updateUserAdminGet, updateUserAdminPut, updateUserSuperAdminPut, logout} from '../controllers/usersController.js'
 import {getUploadForm, getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm, storage} from '../controllers/formControlller.js'
 import {getResetForm, postResetForm, getForgotForm, postForgotForm} from '../controllers/forgotPasswordController.js'
 import { getcustomForm, postcustomForm, customStorage} from '../controllers/customController.js'
-import {verifyStaff, verifyStaffAndAdmin, verifyStaffAdminAndDev} from '../middleware/authenticate.js'
+import {verifyStaff, verifyStaffAndAdmin, verifyStaffAdminAndSuperAdmin} from '../middleware/authenticate.js'
 import multer from "multer";
  
 const router = express.Router() 
@@ -18,8 +18,9 @@ router.get("/", signupGet)
 router.post("/signup", signupPost) 
 router.get("/login", loginGet)
 router.post("/login", loginPost) 
-router.get("/updateUserAdminGet", verifyStaffAdminAndDev, updateUserAdminGet)
-router.put("/updateUserAdminPut", verifyStaffAdminAndDev, updateUserAdminPut)
+router.get("/updateUserAdminGet", verifyStaffAdminAndSuperAdmin, updateUserAdminGet)
+router.put("/updateUserAdminPut", verifyStaffAdminAndSuperAdmin, updateUserAdminPut)
+router.put("/updateUserSuperAdminPut", verifyStaffAdminAndSuperAdmin, updateUserSuperAdminPut)
 router.get("/logout", verifyStaff, logout)
 //FORGOT-PASSWORD
 router.get("/forgotPassword", getForgotForm)

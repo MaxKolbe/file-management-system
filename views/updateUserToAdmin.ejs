@@ -15,7 +15,7 @@
             <% if (req.query.error === "An error occurred during update") { %>
                 <span id="popup" class="error"><%= req.query.error%></h3></span>
             <% } %>
-            <h1>Update User</h1><br>
+            <h1>Update User To Admin</h1><br>
             <div>
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Enter user Email" required>
@@ -26,6 +26,21 @@
             <br>       
             <div>
                 <button type="submit" id="uploadBtn">Update To Admin</button>
+            </div>
+        </form>
+        <!--SUPERADMIN-->
+        <form action="/updateUserSuperAdminPut/?_method=PUT" method="post">
+            <h1>Update User To SuperAdmin</h1><br>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter user Email" required>
+                <% if (req.query.error === "No user found") { %>
+                    <p class="error-message" id="popup" style="color: red;"><%= req.query.error %></p>
+                <% } %>
+            </div>
+            <br>       
+            <div>
+                <button type="submit" id="uploadBtn">Update To SuperAdmin</button>
             </div>
         </form>
     </div>
