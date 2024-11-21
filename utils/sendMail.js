@@ -23,7 +23,7 @@ const sendEmail = (email, token, username, req, res) => {
         <p>We have received a request to reset the password for your FMS account. To ensure the security of your account, we are providing you with the necessary steps to reset your password.</p>
         <p>Please follow the instructions below to reset your password:</p>
         <ol>
-            <li>Click on the following link to access the password reset page: <a href="https://${req.headers.host}/resetPassword/${token}" target="_blank" rel="noopener noreferrer">RESET</a></li>
+            <li>Click on the following link to access the password reset page: <a href="http://${req.headers.host}/resetPassword/${token}" target="_blank" rel="noopener noreferrer">RESET</a></li>
             <li>Once you land on the password reset page, you will be prompted to enter a new password. Choose a strong password that includes a combination of uppercase and lowercase letters, numbers, and special characters to enhance your account's security.</li>
             <li>After setting your new password, click on the "Reset Password" or "Save Changes" button to finalize the process.</li>
         </ol>

@@ -4,14 +4,13 @@ import mongoose from 'mongoose'
 import routes from './routes/routes.js' 
 import methodOverride from 'method-override'
 import cookieParser from 'cookie-parser'
-
-
+ 
 dotenv.config()
  
 const app = express()  
 
 const port = process.env.PORT
-
+  
 // Database connection
 mongoose.connect(process.env.DATABASEURL)
 .then(()=>{

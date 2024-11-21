@@ -9,9 +9,11 @@ export const customStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         // Extract metadata from the request body
         const {folderName, fileFolderName} = req.body
+        const trimedfolderName = folderName.trim()
+        const trimedfileFolderName = fileFolderName.trim()
     
         // Construct the directory path using metadata
-        const dir = path.join(process.env.PARENTDIR, folderName, fileFolderName)
+        const dir = path.join(process.env.PARENTDIR, trimedfolderName, trimedfileFolderName)
     
         // Create the directory if it doesn't exist
         if (!fs.existsSync(dir)) { 

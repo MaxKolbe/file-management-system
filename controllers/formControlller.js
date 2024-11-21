@@ -15,23 +15,29 @@ export const storage = multer.diskStorage({
         // Retrieve metadata from req.body
         const { id } = req.params
         let { suitNumber, court, year, typeOfCase } = req.body
+
+        // Remove spaces 
+        let trimedsuitNumber = suitNumber.trim()
+        let trimedcourt = court.trim()
+        let trimedyear = year.trim()
+        let trimedtypeOfCase = typeOfCase.trim()
   
         // If metadata is missing, retrieve the existing document's metadata from the database
         if (!suitNumber || !court || !year || !typeOfCase) {
           const document = await fileModel.findById(id)
-          if (!document) {
+          if (!document) { 
             return cb(new Error("Document not found"), null)
           }
   
           // Use existing document metadata as fallback
-          suitNumber = suitNumber || document.suitNumber
-          court = court || document.court
-          year = year || document.year
-          typeOfCase = typeOfCase || document.typeOfCase
+          trimedsuitNumber = trimedsuitNumber || document.suitNumber
+          trimedcourt = trimedcourt || document.court
+          trimedyear = trimedyear || document.year
+          trimedtypeOfCase = trimedtypeOfCase || document.typeOfCase
         }
   
         // Construct the directory path using the provided or retrieved metadata
-        const dir = path.join(process.env.PARENTDIR, typeOfCase, year, court, suitNumber)
+        const dir = path.join(process.env.PARENTDIR, trimedtypeOfCase, trimedyear, trimedcourt, trimedsuitNumber)
   
         // Create the directory if it doesn't exist
         if (!fs.existsSync(dir)) {
