@@ -3,7 +3,10 @@ import path from 'path'
 import fileModel from "../models/fileModel.js"
 import templateModel from '../models/customModel.js'
 import userModel from "../models/userModel.js"
+import { convertDocxToHtml } from '../utils/convertDocxToHtml .js'
 import jwt from "jsonwebtoken"
+import dotenv from 'dotenv'
+dotenv.config() 
 
 //Render Home View
 export const getHome = async (req, res) => {
@@ -40,7 +43,12 @@ export const getHome = async (req, res) => {
 //Download Files
 export const downloadFile = (req, res) => {
     const filePath = req.query.path // Get the file path from the query
-    const fullPath = path.join(process.env.PARENTDIR, filePath) // Resolve full path
+    let fullPath
+    if(filePath.includes(process.env.PARENTDIR)){
+        fullPath = filePath // Resolve full path
+    }else{
+        fullPath = path.join(process.env.PARENTDIR, filePath) // Resolve full path
+    }
 
     res.download(fullPath, (err) => {
         if (err) {
@@ -91,3 +99,36 @@ export const searchFiles = async (req, res) => {
         res.status(500).redirect(`/home?error=error+during+search`)
     }
 }
+
+export const readFiles = async (req, res) => {
+    const filePath = req.query.path // File path passed as a query parameter
+    const absolutePath = path.resolve(process.env.PARENTDIR, filePath)
+
+    // Check if the file exists
+    if (!fs.existsSync(absolutePath)) {
+        return res.status(404).send('File not found')
+    }
+
+    // Determine file extension
+    const fileExt = path.extname(absolutePath).toLowerCase()
+
+    if (fileExt === '.pdf') {
+        // Serve the PDF directly
+        res.setHeader('Content-Type', 'application/pdf')
+        res.sendFile(absolutePath)
+    } else if (fileExt === '.docx') {
+        // Convert DOCX to HTML for browser display
+        convertDocxToHtml(absolutePath)
+            .then((htmlContent) => {
+                res.setHeader('Content-Type', 'text/html')
+                res.send(htmlContent)
+            })
+            .catch((error) => {
+                console.error(error)
+                res.status(500).send('Error reading the DOCX file')
+            })
+    } else {
+        res.status(400).send('Unsupported file type')
+    }
+}
+

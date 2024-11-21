@@ -179,16 +179,8 @@ export const deleteForm = async (req, res) => {
             res.status(404).redirect('/uploadForm/history?error=Document+not+found')
         }
 
-        const { fileName, suitNumber, court, year, typeOfCase } = document
-        const filePath = path.join(
-            process.env.PARENTDIR,
-            typeOfCase,
-            year,
-            court,
-            suitNumber,
-            fileName
-        )
-
+        const filePath = document.filePath
+        
         // Delete the file from the filesystem
         fs.unlink(filePath, (err) => {
             if (err) {

@@ -9,5 +9,5 @@ const emailValidator = (email) => {
                         ? true
                         : false
 }
-
+ 
 export default {emailValidator}

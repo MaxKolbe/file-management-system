@@ -1,9 +1,9 @@
 import express from 'express'
-import {getHome, downloadFile, searchFiles} from '../controllers/homeController.js'
+import {getHome, downloadFile, searchFiles, readFiles} from '../controllers/homeController.js'
 import {loginGet, loginPost, signupGet, signupPost, updateUserAdminGet, updateUserAdminPut, updateUserSuperAdminPut, logout} from '../controllers/usersController.js'
 import {getUploadForm, getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm, storage} from '../controllers/formControlller.js'
 import {getResetForm, postResetForm, getForgotForm, postForgotForm} from '../controllers/forgotPasswordController.js'
-import { getcustomForm, postcustomForm, customStorage} from '../controllers/customController.js'
+import {getcustomForm, postcustomForm, customStorage} from '../controllers/customController.js'
 import {verifyStaff, verifyStaffAndAdmin, verifyStaffAdminAndSuperAdmin} from '../middleware/authenticate.js'
 import multer from "multer";
  
@@ -13,6 +13,7 @@ const router = express.Router()
 router.get("/home", verifyStaff, getHome)
 router.get("/downloadFile", verifyStaff, downloadFile)
 router.post("/search", verifyStaff, searchFiles)
+router.get("/readFile", verifyStaff, readFiles)
 //USERS
 router.get("/", signupGet)
 router.post("/signup", signupPost) 

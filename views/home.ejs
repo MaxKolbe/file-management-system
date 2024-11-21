@@ -72,6 +72,7 @@
                             <img src="/images/file.png" alt="File Icon" />
                             <p><%= item.name %></p>
                             <a href="/downloadFile?path=<%= item.path %>" title="Download"><img src="/images/download.png" alt="download button" class="downloadBtn"></a>
+                            <a href="/readFile?path=<%= item.path %>" title="Open" target="_blank"><img src="/images/open.png" alt="open button" class="openBtn"></a>
                         <% } %>
                     </li>
                 <% }) %>
