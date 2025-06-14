@@ -8,7 +8,7 @@
     <title>Sign up | Obrafms</title>
 </head>
 <body>
-    <img src="/images/logo.png" alt="logo">
+    <img src="/images/logo.png" alt="logo" class="o_logo">
     <% if (req.query.error === "An error occurred during sign up") { %>
         <span id="popup" class="error-message" style="color: red;"><h3><%= req.query.error%></h3></span>
     <% } %>
@@ -39,10 +39,14 @@
             </div>
             <br>
             <div>
-                <button type="submit">Sign up</button>
+                <button type="submit" class="btn">Sign up</button>
+                <br>
+                <!-- <span class="internet">Use Google Sign Up With Internet Access</span> -->
+                <span class="warn">Not Usable. Just for Practice.</span>
+                <a href="/auth/google" class="g_parent"><img src="/images/ggl.png" class="g_signup" alt="google_icon">Sign Up With Google</a>
             </div>
             <br>
-            <a href="/login">Log In?</a>
+            <a href="/login">Log In?</a>  
         </form>
     </div>
 <script>

@@ -18,6 +18,7 @@ This is a File Management System (FMS), built with Node.js designed to organize,
 5.  [Setting Up Local Server](#setting-up-local-server)
     - [Windows Task Scheduler ](#windows-task-scheduler )
     - [IP Router Setup](#ip-router-setup)
+6.  [Bonus Setting up Google Auth](#Bonus-Setting-up-Google-Auth)
 
 ## Overview
 This app is a file management system. V1.1.0 is built specifically for Law Firms, a general template version for other small businesses will be made available on another branch.
@@ -62,18 +63,18 @@ For other versions a custom folder structure will be used
 
 ## Features
 1. Home page with a list of folders that contain the documents/files. 
-![](./public/Images/s3.png)
+<!-- ![](./public/Images/s3.png) -->
 2. Download functionality available to download files. 
-![](./public/Images/s4.png)
+<!-- ![](./public/Images/s4.png) -->
 3. Search functionality. 
-![](./public/Images/s5.png)
+<!-- ![](./public/Images/s5.png) -->
 4. Upload form to upload files. 
-![](./public/Images/s6.png)
+<!-- ![](./public/Images/s6.png) -->
 5. Document/File history to see history of uploaded documents 
-![](./public/Images/s7.png)
+<!-- ![](./public/Images/s7.png) -->
 6. Edit and delete functionality for files. 
-![](./public/Images/s9.png)
-![](./public/Images/s8.png)
+<!-- ![](./public/Images/s9.png) -->
+<!-- ![](./public/Images/s8.png) -->
 
 ### Authentication And Authorization
 This app uses the basic jwt auth strategy. 
@@ -169,5 +170,19 @@ For the Static IP address you'll chose, it's best to just change the last 3 numb
 5. After inputting the details click on Apply/Save. And now, your server will use the same IP Address whenever it is connected to the router.
     ![](./public/Images/f.jpeg)
 
+## Bonus Setting up Google Auth 
 
- 
+#### Pre-requisites (npm packages that'll be used)
+- passport
+- passport-google-oauth20
+- express-session
+
+### Google Cloud Console Set-up 
+1. First set up your application in google's cloud console. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Click `select a project` on the top bar and then create a new project. Then select that project. 
+3. On the menu bar click on `APIs and Services` and then `Oauth Consent Screen` to configure your Consent Screen. Make sure your Audience is set to `External` 
+4. Next, create an OAuth Client for the project, the button to create one should be immediately visible. Click on it. 
+- Select your application type (Web). 
+- Add an authorized javascript origin or origins i.e `http://localhost:3000`
+- Add an authorized redirect url. That is the URL to redirect to after authentication i.e `http://localhost:3000/auth/google/callback`
+- Download your credentials and add the client ID and Secret to your .env file. 

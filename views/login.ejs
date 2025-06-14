@@ -8,7 +8,7 @@
     <title>Login | Obrafms</title>
 </head>
 <body>
-    <img src="/images/logo.png" alt="logo">
+    <img src="/images/logo.png" alt="logo" class="o_logo">
     <div class="wrapper">
         <form action="/login" method="post">
             <% if (req.query.error === "An error occurred during login") { %>
@@ -37,7 +37,11 @@
             </div>
             <br>
             <div>
-                <button type="submit">Login</button>
+                <button type="submit" class="btn">Login</button>
+                <br>
+                <!-- <span class="internet">Use Google Sign In With Internet Access</span> -->
+                <span class="warn">Not Usable. Just for Practice.</span>
+                <a href="/auth/google" class="g_parent"><img src="/images/ggl.png" class="g_signup" alt="google_icon">Sign In With Google</a>
             </div>
             <br>
             <a href="/forgotPassword">Forgot Password?</a>

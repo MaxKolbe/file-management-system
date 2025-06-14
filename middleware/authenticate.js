@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import userModel from "../models/userModel.js"
 dotenv.config()
-
+ 
 export const verifyStaff = (req, res, next)=>{
   const token = req.cookies.staff
   if(token){

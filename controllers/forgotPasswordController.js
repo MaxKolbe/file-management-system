@@ -38,7 +38,6 @@ export const postForgotForm = async (req, res) => {
     
                 sendEmail(email, token, username, req, res)
             }
-
         }catch(err){
             console.log(err) 
             res.status(500).redirect('/forgotPassword/?error=An+error+occurred+during+reset')
@@ -82,16 +81,16 @@ export const postResetForm = async (req, res) => {
                 otp: req.params.id, 
                 expiresIn: {$gt: Date.now()} }, 
                 { $set: { password: hashedPassword }
-            });
+            })
     
             user.otp = undefined;
             user.expiresIn = undefined;
     
             user.save()
-            res.redirect("/login/?message=password+reset+successful");
+            res.redirect("/login/?message=password+reset+successful")
         }
     } catch (err) {
         console.log(`There was an error: ${err}`);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Internal server error" })
     }
 }

@@ -38,7 +38,7 @@ body{
     justify-content: center;
     align-items: center;
 }
-img{
+.o_logo{
     width: 60px;
     position: absolute;
     top: 10%;
@@ -70,18 +70,18 @@ form div input:focus{
 form div input:hover{
     cursor: pointer;
 }
-button{
+.btn{
     font-size: 1rem;
     border: none;
     background-color: var(--grey-text);
     color: var(--white);
     padding: 10px 15px;
-    width: 40%;
+    width: 42%;
     border-radius: 4px;
     margin: 0 auto;
     cursor: pointer;
 }
-button:hover{
+.btn:hover{
     background-color: var(--grey-hover);
     transition: .3s;
 }
@@ -91,6 +91,39 @@ a{
 }
 .error-message{
     font-size: 12px;
+}
+.g_parent{
+    font-size: 1rem;
+    border: none;
+    background-color: var(--white);
+    padding: 10px 15px;
+    width: 42%;
+    border-radius: 4px;
+    margin: 0 auto;
+    cursor: pointer;
+    box-shadow: .5px .5px 2px var(--grey-hover); /*box-shadow: offset-x offset-y blur-radius spread-radius color;*/
+    color: var(--black); 
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.g_signup{
+    width: 20px; 
+    margin-right: 8px; 
+}
+.internet{
+    color: var(--success);
+    text-align: center;
+    margin-bottom: 4px;
+    font-size: 12px;
+}
+.warn{
+    text-align: center;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: var(--error);
 }
 @media only screen and (max-width: 760px) {
     form{
