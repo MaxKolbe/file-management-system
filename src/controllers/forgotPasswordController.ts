@@ -1,7 +1,7 @@
 import crypto from "crypto"
 import dotenv from "dotenv"
 import bcrypt from "bcrypt"
-import userModel from "../models/userModel.js"
+import userModel from "../modules/users/users.model.js"
 import sendEmail from "../utils/sendMail.js"
 dotenv.config()
 

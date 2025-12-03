@@ -1,7 +1,7 @@
 import multer from "multer"
 import path from "path"
 import fs from "fs"
-import customModel from "../models/customModel.js"
+import customModel from "../modules/custom/custom.model.js"
 import dotenv from 'dotenv'
 dotenv.config() 
 
