@@ -1,6 +1,5 @@
 import filesModel from '../files/files.model';
 import customModel from '../custom/custom.model';
-import usersModel from '../users/users.model';
 import fs from 'fs';
 import path from 'path';
 
@@ -22,8 +21,48 @@ export const getHome = (basePath: string, relativePath: string) => {
   };
 };
 
-export const downloadFile = () => {};
+export const searchFiles = async (query: string) => {
+  const fileSearchResults = await filesModel.find({
+    $or: [
+      { fileName: { $regex: query, $options: 'i' } },
+      { typeOfCase: { $regex: query, $options: 'i' } },
+      { year: { $regex: query, $options: 'i' } },
+      { court: { $regex: query, $options: 'i' } },
+      { suitNumber: { $regex: query, $options: 'i' } },
+      { tags: { $regex: query, $options: 'i' } },
+    ],
+  });
 
-export const searchFiles = () => {};
+  const templateSearchResults = await customModel.find({
+    $or: [
+      { fileName: { $regex: query, $options: 'i' } },
+      { folderName: { $regex: query, $options: 'i' } },
+      { fileFolderName: { $regex: query, $options: 'i' } },
+    ],
+  });
 
-export const readFiles = () => {};
+  const searchResults = [...fileSearchResults, ...templateSearchResults]; //concatenates two arrays
+
+  return {
+    code: 200,
+    data: searchResults,
+  };
+};
+
+export const readFiles = (absolutePath: string) => {
+  // Check if the file exists
+  if (!fs.existsSync(absolutePath)) {
+    return {
+      code: 404,
+      message: 'File not found',
+    };
+  }
+
+  // Determine file extension
+  const fileExt: string = path.extname(absolutePath).toLowerCase();
+
+  return {
+    code: 200,
+    data: fileExt,
+  };
+};
