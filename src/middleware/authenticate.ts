@@ -1,63 +1,77 @@
-import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
-import userModel from "../models/userModel.js"
-dotenv.config()
- 
-export const verifyStaff = (req, res, next)=>{
-  const token = req.cookies.staff
-  if(token){
-    jwt.verify(token, process.env.SECRET, (err, user)=>{
-      if(err){
-          res.status(500).redirect('/?error=Error+in+verifying+staff')
-      }else{
-        req.user = user
-        next()
-      }  
-    })
-  }else{ 
-    res.status(500).redirect('/')//no token
+import { Request, Response, NextFunction } from 'express';
+import { StaffPayload } from '../types/jwttype.js';
+import jwt from 'jsonwebtoken';
+import userModel from '../modules/users/users.model.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+export const verifyStaff = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.cookies.staff;
+
+  if (!token) {
+    res.status(500).redirect('/');
   }
-} 
 
-export const verifyStaffAndAdmin = async (req, res, next) => {
-  const token = req.cookies.staff
-  if(token){
-    jwt.verify(token, process.env.SECRET, async (err, user)=>{
-      if(err){
-        res.status(500).redirect('/?error=Error+in+verifying+token')
-      }else{
-      req.user = user
-      const guy = await userModel.findById(user.id)
-      if(guy.isAdmin === true){
-        next()
-      }else{
-        res.status(500).redirect('/home/?error=Error+in+verifying+admin')
-      }}
-    })
-  }else{ 
-    res.status(500).redirect('/home/?error=Error+in+verifying+admin')
+  try {
+    const user = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
+    req.user = user;
+    next();
+  } catch (err) {
+    console.log(err);
+    res.status(500).redirect('/?error=Error+in+verifying+staff');
   }
-}
+};
 
-export const verifyStaffAdminAndSuperAdmin = async (req, res, next) => {
-  const token = req.cookies.staff
-  if(token){
-    jwt.verify(token, process.env.SECRET, async (err, user)=>{
-      if(err){
-        res.status(500).redirect('/?error=Error+in+verifying+token')
-      }else{
-      req.user = user
-      const guy = await userModel.findById(user.id) 
-      if(guy.isSuperAdmin === true){
-        next()
-      }else{
-        res.status(500).redirect('/home/?error=Not+a+SuperAdmin')
-      }}
-    })
-  }else{ 
-    res.status(500).redirect('/home/?error=Error+in+verifying+admin')
+export const verifyStaffAndAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.cookies.staff;
+
+  if (!token) {
+    return res.status(401).redirect('/home/?error=Error+in+verifying+admin');
   }
-}
 
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
+    const userId = decoded.id;
+    const guy = await userModel.findById(userId);
 
+    if (!guy) {
+      return res.status(404).redirect('/home/?error=User+not+found');
+    }
+    if (guy.isAdmin === true) {
+      req.user = guy;
+      next();
+    } else {
+      return res.status(403).redirect('/home/?error=Not+a+Admin');
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(401).redirect('/?error=Error+in+verifying+token');
+  }
+};
 
+export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.cookies.staff;
+
+  if (!token) {
+    return res.status(401).redirect('/home/?error=Error+in+verifying+admin');
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
+    const userId = decoded.id;
+    const guy = await userModel.findById(userId);
+
+    if (!guy) {
+      return res.status(404).redirect('/home/?error=User+not+found');
+    }
+    if (guy.isSuperAdmin === true) {
+      req.user = guy;
+      next();
+    } else {
+      return res.status(500).redirect('/home/?error=Not+a+SuperAdmin');
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(401).redirect('/?error=Error+in+verifying+token');
+  }
+};

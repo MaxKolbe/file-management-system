@@ -1,16 +1,16 @@
 import express from 'express';
-import customRouter from './modules/custom/custom.routes.js';
-import fileRouter from './modules/files/files.services.js';
-import homeRouter from './modules/home/home.routes.js';
+// import customRouter from './modules/custom/custom.routes.js';
+// import fileRouter from './modules/files/files.services.js';
+// import homeRouter from './modules/home/home.routes.js';
 import userRouter from './modules/users/users.routes.js';
-import forgotp from './modules/forgotpassword/forgotpassword.routes.js';
+// import forgotp from './modules/forgotpassword/forgotpassword.routes.js';
 import userModel from './modules/users/users.model.js';
 import signJwt from './utils/createJwt.js';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import session from 'express-session';
-import { connectToDb } from './configs/db';
+import { connectToDb } from './configs/db.js';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Request, Response, NextFunction } from 'express';
 
@@ -74,35 +74,28 @@ passport.deserializeUser((user: any, done) => {
 });
 
 app.use('/', userRouter);
-app.use('/', homeRouter);
-app.use('/', fileRouter);
-app.use('/', customRouter);
-app.use('/', forgotp);
+// app.use('/', homeRouter);
+// app.use('/', fileRouter);
+// app.use('/', customRouter);
+// app.use('/', forgotp);
 
 // Start Google authentication
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
-);
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Callback URL after Google authentication
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureMessage: '/' }),
-  async (req, res) => {
-    if (req.user) {
-      const email = req.user; //req.user.json.email !!CHECKKKKKK
-      const existingUser = await userModel.findOne({ email });
+app.get('/auth/google/callback', passport.authenticate('google', { failureMessage: '/' }), async (req, res) => {
+  if (req.user) {
+    const email = req.user; //req.user.json.email !!CHECKKKKKK
+    const existingUser = await userModel.findOne({ email });
 
-      if (existingUser) {
-        const token = signJwt(existingUser.id);
-        res.cookie('staff', token, { httpOnly: true }); //save the jwt as a cookie
+    if (existingUser) {
+      const token = signJwt(existingUser.id);
+      res.cookie('staff', token, { httpOnly: true }); //save the jwt as a cookie
 
-        res.redirect('/home');
-      }
+      res.redirect('/home');
     }
-  },
-);
+  }
+});
 
 // Google Logout
 // app.get("/logout", (req, res) => {

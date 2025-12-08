@@ -3,8 +3,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 interface IUser extends Document {
   email: string;
   password: string;
-  isAdmin: string;
-  isSuperAdmin: string;
+  isAdmin: boolean;
+  isSuperAdmin: boolean;
   otp: string;
   expiresIn: Date;
 }

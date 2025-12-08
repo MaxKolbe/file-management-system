@@ -48,7 +48,7 @@ export const loginPost = async (req, res) => {
                 res.status(404).redirect('/login/?error=Incorrect+password')   
             }  
         }else{
-            res.status(404).redirect('/login/?error=No+user+found')  
+            res.status(404).redirect('/login/?error=')  
         }
     }catch(err){
         console.error(err);

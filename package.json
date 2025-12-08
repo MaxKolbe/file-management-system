@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --stage local",
-    "start": "node --loader ts-node/esm src/index.ts",
-    "build": "tsc"
+   "build": "npm install && npx tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon --exec \"node --loader ts-node/esm\" src/index.ts",
+    "watch": "npx tsc -w"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "mongoose": "^8.6.3",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^7.0.11",
+    "nodemon": "^3.1.11",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0"
   },
