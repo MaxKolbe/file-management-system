@@ -62,7 +62,6 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
     // req.user = decoded;?? TEST!
     const userId = decoded.id;
     const guy = await userModel.findById(userId);
-    const me = 12;
 
     if (!guy) {
       return res.status(404).redirect('/home/?error=User+not+found');
