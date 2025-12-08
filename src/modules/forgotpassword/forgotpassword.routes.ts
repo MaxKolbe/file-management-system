@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import {
-  getResetForm,
-  postResetForm,
-  getForgotForm,
-  postForgotForm,
-} from '../../controllers/forgotPasswordController.js';
+  getResetFormController,
+  postResetFormController,
+  getForgotFormController,
+  postForgotFormController,
+} from './forgotpassword.controllers.js';
 
 const forgotp = Router();
 
 //FORGOT-PASSWORD
-forgotp.get('/forgotPassword', getForgotForm);
-forgotp.post('/forgotPassword', postForgotForm);
-forgotp.get('/resetPassword/:id', getResetForm);
-forgotp.post('/resetPassword/:id', postResetForm);
+forgotp.get('/forgotPassword', getForgotFormController);
+forgotp.post('/forgotPassword', postForgotFormController);
+forgotp.get('/resetPassword/:id', getResetFormController);
+forgotp.post('/resetPassword/:id', postResetFormController);
 
 export default forgotp;
