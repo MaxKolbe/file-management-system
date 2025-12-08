@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StaffPayload } from '../types/jwttype.js';
-import jwt from 'jsonwebtoken';
 import userModel from '../modules/users/users.model.js';
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -31,6 +31,7 @@ export const verifyStaffAndAdmin = async (req: Request, res: Response, next: Nex
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
+    // req.user = decoded;?? TEST!
     const userId = decoded.id;
     const guy = await userModel.findById(userId);
 
@@ -58,8 +59,10 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
+    // req.user = decoded;?? TEST!
     const userId = decoded.id;
     const guy = await userModel.findById(userId);
+    const me = 12;
 
     if (!guy) {
       return res.status(404).redirect('/home/?error=User+not+found');
