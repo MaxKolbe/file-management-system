@@ -1,4 +1,4 @@
-const emailValidator = (email) => {
+const emailValidator = (email: string) => {
     return (email.includes("@gmail.com")) 
             ? true 
             : (email.includes("@yahoo.com")) 
@@ -10,4 +10,4 @@ const emailValidator = (email) => {
                         : false
 }
  
-export default {emailValidator}
+export default emailValidator

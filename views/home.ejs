@@ -26,6 +26,9 @@
     <% if(req.query.error === "Not a SuperAdmin") {%>
         <p id="popup" class="error">Only Super Admins can access this route</p>
     <% } %> 
+    <% if(req.query.error === "Not a Admin") {%>
+        <p id="popup" class="error">Only Admins can access this route</p>
+    <% } %> 
     <% if(req.query.error === "Error downloading file") {%>
         <p id="popup" class="error">Error downloading file</p>
     <% } %> 

@@ -1,7 +1,7 @@
 import mammoth from 'mammoth'
 import fs from 'fs'
 
-export const convertDocxToHtml = (filePath) => {
+export const convertDocxToHtml = (filePath: any) => {
     return new Promise((resolve, reject) => {
         fs.readFile(filePath, (err, data) => {
             if (err) return reject(err)

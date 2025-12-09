@@ -1,3 +1,4 @@
+import { Request, Response} from 'express'
 import nodemailer from "nodemailer"
 import dotenv from 'dotenv'
 dotenv.config()
@@ -13,7 +14,7 @@ var transporter = nodemailer.createTransport({
     }
 }) 
 
-const sendEmail = (email, token, username, req, res) => {
+const sendEmail = (email: string, token: string, username: string, req: Request, res: Response) => {
     
     var mailOptions = { 
         from: process.env.EMAIL,
