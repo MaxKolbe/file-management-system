@@ -18,7 +18,7 @@ export const getHomeController = async (req: Request, res: Response) => {
 
   try {
     const response = await getHome(basePath, relativePath);
-    res.render('home', { req, folderContents: response.data, relativePath, lawyer, query });
+    res.render('home', { req, folderContents: response.data, relativePath, lawyer: lawyer.data, query });
   } catch (err) {
     console.error('Error reading directory:', err);
     res.status(500).send('Error reading directory');

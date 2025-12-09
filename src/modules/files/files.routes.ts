@@ -1,17 +1,28 @@
-import { Router } from 'express';
+import express from 'express';
+import multer from 'multer';
+import { verifyStaff, verifyStaffAndAdmin, verifyStaffAdminAndSuperAdmin } from '../../middleware/authenticate.js';
 import {
-  getResetForm,
-  postResetForm,
-  getForgotForm,
-  postForgotForm,
-} from '../../controllers/forgotPasswordController.js';
+  getUploadFormController,
+  getFormHistoryController,
+  getUpdateFormController,
+  postUploadFormController,
+  updateFormController,
+  deleteFormController,
+  storage,
+} from './files.controllers.js';
 
-const forgotpasswordRouter = Router();
+const fileRouter = express.Router();
 
-//FORGOT-PASSWORD
-forgotpasswordRouter.get('/forgotPassword', getForgotForm);
-forgotpasswordRouter.post('/forgotPassword', postForgotForm);
-forgotpasswordRouter.get('/resetPassword/:id', getResetForm);
-forgotpasswordRouter.post('/resetPassword/:id', postResetForm);
+//MULTER INIT
+const upload = multer({ storage: storage });
+// Configure multer for file updates if needed
+const update = multer({ storage: storage });
+//FILES
+fileRouter.get('/uploadForm', verifyStaffAndAdmin, getUploadFormController);
+fileRouter.post('/uploadForm', verifyStaffAndAdmin, upload.single('file'), postUploadFormController);
+fileRouter.get('/uploadForm/history', verifyStaffAndAdmin, getFormHistoryController);
+fileRouter.get('/updateForm/:id', verifyStaffAndAdmin, getUpdateFormController);
+fileRouter.put('/updateForm/:id', verifyStaffAndAdmin, update.single('file'), updateFormController);
+fileRouter.delete('/uploadForm/:id', verifyStaffAndAdmin, deleteFormController);
 
-export default forgotpasswordRouter;
+export default fileRouter;
