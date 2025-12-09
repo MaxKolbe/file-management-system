@@ -2,7 +2,6 @@ import { Request } from 'express';
 import filesModel from './files.model.js';
 import path from 'path';
 import fs from 'fs';
-import { StringDecoder } from 'string_decoder';
 
 export const postUploadForm = async (
   req: Request,
@@ -42,13 +41,6 @@ export const postUploadForm = async (
 export const getUpdateForm = async (id: string) => {
   const document = await filesModel.findById(id);
 
-  if (!document) {
-    return {
-      code: 400,
-      message: 'Did not find document',
-    };
-  }
-
   return {
     code: 200,
     message: 'success',
@@ -69,8 +61,8 @@ export const updateForm = async (
     return {
       code: 404,
       message: 'Document+not+found',
-    };
-  }
+    }; 
+  } 
 
   // Set file name based on the uploaded file or use the existing file name
   const fileName = file ? file.originalname : path.basename(document.filePath);
@@ -88,7 +80,7 @@ export const updateForm = async (
   // Ensure the old file exists before moving or replacing it
   if (!fs.existsSync(document.filePath)) {
     return {
-      code: 400,
+      code: 404,
       message: `Original+file+not+found`,
     };
   }

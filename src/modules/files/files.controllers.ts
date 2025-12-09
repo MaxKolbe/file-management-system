@@ -7,7 +7,6 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 //STORAGE DESINATION & FILENAME SETUP
 export const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
@@ -16,9 +15,9 @@ export const storage = multer.diskStorage({
       let { suitNumber, court, year, typeOfCase } = req.body;
 
       let trimedsuitNumber = suitNumber.trim();
-      let trimedcourt = court.trim();
-      let trimedyear = year.trim();
-      let trimedtypeOfCase = typeOfCase.trim();
+      let trimedcourt = court
+      let trimedyear = year
+      let trimedtypeOfCase = typeOfCase
 
       // If metadata is missing, retrieve the existing document's metadata from the database
       if (!suitNumber || !court || !year || !typeOfCase) {
@@ -71,7 +70,7 @@ export const postUploadFormController = async (req: Request, res: Response) => {
   const { typeOfCase, year, court, suitNumber, tags } = req.body;
 
   if (!typeOfCase || !year || !court || !suitNumber) {
-    res.status(400).redirect('/uploadForm?error=Fill+all+form+fields!');
+    return res.status(400).redirect('/uploadForm?error=Fill+all+form+fields!');
   }
 
   try {
@@ -99,10 +98,6 @@ export const updateFormController = async (req: Request, res: Response) => {
     const response = await updateForm(id!, file, typeOfCase, year, court, suitNumber);
 
     if (response.code === 404) {
-      return res.status(response.code).redirect(`/uploadForm/history?error=${response.message}`);
-    }
-
-    if (response.code === 400) {
       return res.status(response.code).redirect(`/uploadForm/history?error=${response.message}`);
     }
 
