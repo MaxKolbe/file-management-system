@@ -26,7 +26,7 @@ export const verifyStaffAndAdmin = async (req: Request, res: Response, next: Nex
   const token = req.cookies.staff;
 
   if (!token) {
-    return res.status(401).redirect('/home/?error=Error+in+verifying+admin');
+    return res.status(401).redirect('/home?error=Error+in+verifying+admin');
   }
 
   try {
@@ -36,13 +36,13 @@ export const verifyStaffAndAdmin = async (req: Request, res: Response, next: Nex
     const guy = await userModel.findById(userId);
 
     if (!guy) {
-      return res.status(404).redirect('/home/?error=User+not+found');
+      return res.status(404).redirect('/home?error=User+not+found');
     }
     if (guy.isAdmin === true) {
       req.user = guy;
       next();
     } else {
-      return res.status(403).redirect('/home/?error=Not+a+Admin');
+      return res.status(403).redirect('/home?error=Not+a+Admin');
     }
   } catch (err) {
     console.log(err);
@@ -54,7 +54,7 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
   const token = req.cookies.staff;
 
   if (!token) {
-    return res.status(401).redirect('/home/?error=Error+in+verifying+admin');
+    return res.status(401).redirect('/home?error=Error+in+verifying+admin');
   }
 
   try {
@@ -64,13 +64,13 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
     const guy = await userModel.findById(userId);
 
     if (!guy) {
-      return res.status(404).redirect('/home/?error=User+not+found');
+      return res.status(404).redirect('/home?error=User+not+found');
     }
     if (guy.isSuperAdmin === true) {
       req.user = guy;
       next();
     } else {
-      return res.status(500).redirect('/home/?error=Not+a+SuperAdmin');
+      return res.status(500).redirect('/home?error=Not+a+SuperAdmin');
     }
   } catch (err) {
     console.log(err);

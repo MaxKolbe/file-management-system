@@ -13,7 +13,7 @@ export const getHomeController = async (req: Request, res: Response) => {
   const lawyer = await getUser(req, res);
 
   if (lawyer.code === 400) {
-    res.status(lawyer.code).redirect('/login');
+    return res.status(lawyer.code).redirect('/login');
   }
 
   try {
@@ -39,7 +39,7 @@ export const downloadFileController = (req: Request, res: Response) => {
   res.download(fullPath, (err: Error) => {
     if (err) {
       console.error('Error downloading file:', err);
-      res.status(404).redirect('/home/?error=Error+downloading+file');
+      return res.status(404).redirect('/home/?error=Error+downloading+file');
     }
   });
 };
