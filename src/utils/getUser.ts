@@ -1,4 +1,4 @@
-import usersModel from '../modules/users/users.model';
+import usersModel from '../modules/users/users.model.js';
 import { StaffPayload } from '../types/jwttype.js';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';

@@ -11,18 +11,18 @@ export const signupController = async (req: Request, res: Response) => {
     const response = await signup(email, password, officeCode);
 
     if (response.code === 404) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+      return res.status(response.code).redirect(`/?error=${response.message}`);
     }
 
     if (response.code === 400) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+      return res.status(response.code).redirect(`/?error=${response.message}`);
     }
 
     res.cookie('staff', response.data, { httpOnly: true });
     res.status(200).redirect('/login');
   } catch (err) {
     console.error(err);
-    res.status(500).redirect('/?error=An+error+occurred+during+login');
+    res.status(500).redirect('/?error=An+error+occurred+during+sign+up');
   }
 };
 
@@ -36,18 +36,18 @@ export const loginController = async (req: Request, res: Response) => {
     const response = await login(email, password);
 
     if (response.code === 404) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+      return res.status(response.code).redirect(`/login?error=${response.message}`);
     }
 
     if (response.code === 400) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+      return res.status(response.code).redirect(`/login?error=${response.message}`);
     }
 
     res.cookie('staff', response.data, { httpOnly: true });
     res.status(200).redirect('/home');
   } catch (err) {
     console.error(err);
-    res.status(500).redirect('/?error=An+error+occurred+during+login');
+    res.status(500).redirect('/login?error=An+error+occurred+during+login');
   }
 };
 
@@ -61,16 +61,16 @@ export const updateUserToAdminController = async (req: Request, res: Response) =
     const response = await updateUseradmin(email);
 
     if (response.code === 404) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+     return res.status(response.code).redirect(`/home?error=${response.message}`);
     }
 
-    if (response.code === 400) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+    if (response.code === 400) { 
+     return res.status(response.code).redirect(`/home?error=${response.message}`);
     }
 
-    res.status(response.code).redirect(`/home/?error=${response.message}`);
+    res.status(response.code).redirect(`/home?message=${response.message}`);
   } catch (err) {
-    res.status(500).redirect('/home/?error=Could+not+update+user');
+    res.status(500).redirect('/home?error=Could+not+update+user');
   }
 };
 
@@ -80,16 +80,16 @@ export const updateUserToSuperAdminController = async (req: Request, res: Respon
     const response = await updateUsersuperadmin(email);
 
     if (response.code === 404) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+      return res.status(response.code).redirect(`/home?error=${response.message}`);
     }
 
     if (response.code === 400) {
-      res.status(response.code).redirect(`/?error=${response.message}`);
+      return res.status(response.code).redirect(`/home?error=${response.message}`);
     }
 
-    res.status(response.code).redirect(`/home/?error=${response.message}`);
+    res.status(response.code).redirect(`/home?message=${response.message}`);
   } catch (err) {
-    res.status(500).redirect('/home/?error=Could+not+update+user');
+    res.status(500).redirect('/home?error=Could+not+update+user');
   }
 };
 

@@ -1,9 +1,9 @@
 import express from 'express';
-// import customRouter from './modules/custom/custom.routes.js';
-// import fileRouter from './modules/files/files.services.js';
-// import homeRouter from './modules/home/home.routes.js';
+import customRouter from './modules/custom/custom.routes.js';
+import fileRouter from './modules/files/files.routes.js';
+import homeRouter from './modules/home/home.routes.js';
 import userRouter from './modules/users/users.routes.js';
-// import forgotp from './modules/forgotpassword/forgotpassword.routes.js';
+import forgotp from './modules/forgotpassword/forgotpassword.routes.js';
 import userModel from './modules/users/users.model.js';
 import signJwt from './utils/createJwt.js';
 import methodOverride from 'method-override';
@@ -74,10 +74,10 @@ passport.deserializeUser((user: any, done) => {
 });
 
 app.use('/', userRouter);
-// app.use('/', homeRouter);
-// app.use('/', fileRouter);
-// app.use('/', customRouter);
-// app.use('/', forgotp);
+app.use('/', homeRouter);
+app.use('/', fileRouter);
+app.use('/', customRouter);
+app.use('/', forgotp);
 
 // Start Google authentication
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

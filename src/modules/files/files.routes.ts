@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { verifyStaff, verifyStaffAndAdmin, verifyStaffAdminAndSuperAdmin } from '../../middleware/authenticate.js';
+import { verifyStaffAndAdmin } from '../../middleware/authenticate.js';
 import {
   getUploadFormController,
   getFormHistoryController,

@@ -1,5 +1,5 @@
-import filesModel from '../files/files.model';
-import customModel from '../custom/custom.model';
+import filesModel from '../files/files.model.js';
+import customModel from '../custom/custom.model.js';
 import fs from 'fs';
 import path from 'path';
 

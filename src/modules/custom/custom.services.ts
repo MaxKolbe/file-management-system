@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import customModel from './custom.model';
+import customModel from './custom.model.js';
 import path from 'path';
 
 export const postcustomForm = async (req: Request, folderName: string, fileFolderName: string) => {
