@@ -10,7 +10,7 @@ export const postForgotForm = async (email: string, req: Request, res: Response)
 
   if (!user) {
     return {
-      code: 400,
+      code: 404,
       message: 'User+not+found',
     };
   }
@@ -76,7 +76,7 @@ export const postResetForm = async (id: string, password: string) => {
     { $set: { password: hashedPassword } },
   );
 
-  user.otp = '';
+  user.otp = undefined as any;
   user.expiresIn = undefined as any;
 
   user.save();

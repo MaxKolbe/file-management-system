@@ -13,6 +13,8 @@ import session from 'express-session';
 import { connectToDb } from './configs/db.js';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Request, Response, NextFunction } from 'express';
+import dotenv from 'dotenv'
+dotenv.config() 
 
 const app = express();
 
@@ -25,10 +27,10 @@ app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', 'views');
-
+ 
 app.use(
   session({
-    secret: 'blablabla', // key for encrypting session
+    secret: process.env.SESSION_SECRET as string, // key for encrypting session
     resave: false, // deprecated - tho still used in some cases to only resave session if it was modified
     saveUninitialized: true, // save session even if it was not modified
   }),

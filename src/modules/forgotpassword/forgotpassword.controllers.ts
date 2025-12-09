@@ -10,7 +10,7 @@ export const postForgotFormController = async (req: Request, res: Response) => {
   try {
     const response = await postForgotForm(email, req, res);
 
-    if (response.code === 400) {
+    if (response.code === 404) {
       console.log(`User does not exist`);
       res.status(response.code).redirect(`/forgotPassword/?error=${response.message}`);
     }
