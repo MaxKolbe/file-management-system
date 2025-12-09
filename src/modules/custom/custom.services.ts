@@ -20,8 +20,8 @@ export const postcustomForm = async (req: Request, folderName: string, fileFolde
 
   await fileData.save();
 
-  return{
+  return {
     code: 201,
-    message: "success"
-  }
+    message: 'success',
+  };
 };

@@ -39,13 +39,13 @@ export const postcustomFormController = async (req: Request, res: Response) => {
   const { folderName, fileFolderName } = req.body;
 
   if (!folderName || !fileFolderName) {
-    res.status(400).redirect('/custom?error=Fill+all+form+fields!');
+    return res.status(400).redirect('/custom?error=Fill+all+form+fields!');
   }
 
   try {
-    const response = await postcustomForm(req, folderName, fileFolderName)
+    const response = await postcustomForm(req, folderName, fileFolderName);
 
-      res.status(response.code).redirect(`/custom?message=${response.message}`)
+    res.status(response.code).redirect(`/custom?message=${response.message}`);
   } catch (err) {
     console.error(err);
     res.status(500).redirect('/custom?error=An+error+occurred+during+upload');
