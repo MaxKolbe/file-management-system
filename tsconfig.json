@@ -10,7 +10,7 @@
 
     // For nodejs:
     "lib": ["esnext"],
-    "types": ["node"],
+    "types": ["node", "express"],
     // and npm install -D @types/node
 
     "moduleResolution": "node", // Resolve modules using Node.js style
@@ -28,5 +28,6 @@
     // "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  }
+  },
+  "include": ["src"]
 }
