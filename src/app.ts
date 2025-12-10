@@ -57,13 +57,13 @@ passport.use(
 
       const existingUser = await userModel.findOne({ email });
       if (existingUser) {
-        return done(null, profile); // Pass the user profile to the next middleware
+        return done(null, existingUser); // Store existingUser in the session as req.user
       }
 
       const user = await userModel.create({ email });
 
-      // console.log("User authenticated:", user) CHANGE ID TO MONGO ID
-      return done(null, profile); // Pass the user profile to the next middleware
+      // console.log("User authenticated:", user)// CHANGE ID TO MONGO ID
+      return done(null, user); // Store user in the session as req.user
     },
   ),
 );
@@ -87,7 +87,8 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 // Callback URL after Google authentication
 app.get('/auth/google/callback', passport.authenticate('google', { failureMessage: '/' }), async (req, res) => {
   if (req.user) {
-    const email = req.user; //req.user.json.email !!CHECKKKKKK
+    const email = req.user//.email;
+    console.log("this is the req.user.email:", email)
     const existingUser = await userModel.findOne({ email });
 
     if (existingUser) {

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { StaffPayload } from '../types/jwttype.js';
+import { StaffPayload } from '../types/jwttype.d.js';
 import userModel from '../modules/users/users.model.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
