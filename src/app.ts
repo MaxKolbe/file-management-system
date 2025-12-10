@@ -11,11 +11,10 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import session from 'express-session';
 import { connectToDb } from './configs/db.js';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as GoogleStrategy, Profile, VerifyCallback } from 'passport-google-oauth20';
 import { Request, Response, NextFunction } from 'express';
-import dotenv from 'dotenv'
-dotenv.config() 
-
+import dotenv from 'dotenv';
+dotenv.config();
 const app = express();
 
 connectToDb();
@@ -27,7 +26,7 @@ app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', 'views');
- 
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET as string, // key for encrypting session
@@ -50,20 +49,21 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       callbackURL: 'http://localhost:3000/auth/google/callback', // URL to redirect to after authentication
     },
-    async (accessToken: any, refreshToken: any, profile: any, done: any) => {
+    async (accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback) => {
       // This function is called after successful authentication
       // Here you can save the user profile to your database or session
       const email = profile._json.email;
-
       const existingUser = await userModel.findOne({ email });
+      
       if (existingUser) {
         return done(null, existingUser); // Store existingUser in the session as req.user
+        //Don't store entire user in session for serious projects
       }
 
       const user = await userModel.create({ email });
 
-      // console.log("User authenticated:", user)// CHANGE ID TO MONGO ID
       return done(null, user); // Store user in the session as req.user
+      //Don't store entire user in session for serious projects
     },
   ),
 );
@@ -85,19 +85,17 @@ app.use('/', forgotp);
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Callback URL after Google authentication
-app.get('/auth/google/callback', passport.authenticate('google', { failureMessage: '/' }), async (req, res) => {
-  if (req.user) {
-    const email = req.user//.email;
-    console.log("this is the req.user.email:", email)
-    const existingUser = await userModel.findOne({ email });
-
-    if (existingUser) {
-      const token = signJwt(existingUser.id);
-      res.cookie('staff', token, { httpOnly: true }); //save the jwt as a cookie
-
-      res.redirect('/home');
-    }
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), async (req, res) => {
+  if (!req.user) {
+    return res.redirect('/login');
   }
+
+  const person: any = req.user;
+  const token = signJwt(person.id);
+  
+  res.cookie('staff', token, { httpOnly: true });
+
+  return res.redirect('/home');
 });
 
 // Google Logout

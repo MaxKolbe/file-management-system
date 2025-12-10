@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const verifyStaff = (req: Request, res: Response, next: NextFunction) => {
+export const verifyStaff = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.staff;
 
   if (!token) {
@@ -13,9 +13,12 @@ export const verifyStaff = (req: Request, res: Response, next: NextFunction) => 
   }
 
   try {
-    const user = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
-    req.user = user;
-    next();
+    const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
+    const user = await userModel.findById(decoded.id);
+    if (user) {
+      req.user = user; // Rethink this
+      next();
+    }
   } catch (err) {
     console.log(err);
     res.status(500).redirect('/?error=Error+in+verifying+staff');
@@ -31,7 +34,6 @@ export const verifyStaffAndAdmin = async (req: Request, res: Response, next: Nex
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
-    // req.user = decoded;?? TEST!
     const userId = decoded.id;
     const guy = await userModel.findById(userId);
 
@@ -39,7 +41,7 @@ export const verifyStaffAndAdmin = async (req: Request, res: Response, next: Nex
       return res.status(404).redirect('/home?error=User+not+found');
     }
     if (guy.isAdmin === true) {
-      req.user = guy;
+      req.user = guy; // Rethink this
       next();
     } else {
       return res.status(403).redirect('/home?error=Not+a+Admin');
@@ -59,7 +61,6 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
-    // req.user = decoded;?? TEST!
     const userId = decoded.id;
     const guy = await userModel.findById(userId);
 
@@ -67,7 +68,7 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
       return res.status(404).redirect('/home?error=User+not+found');
     }
     if (guy.isSuperAdmin === true) {
-      req.user = guy;
+      req.user = guy; // Rethink this
       next();
     } else {
       return res.status(500).redirect('/home?error=Not+a+SuperAdmin');
