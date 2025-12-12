@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getUser } from '../../utils/getUser.js';
 import { getFormHistory, getUpdateForm, postUploadForm, updateForm, deleteForm, getFile } from './files.services.js';
+import logger from '../../configs/logger.config.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -15,9 +16,9 @@ export const storage = multer.diskStorage({
       let { suitNumber, court, year, typeOfCase } = req.body;
 
       let trimedsuitNumber = suitNumber.trim();
-      let trimedcourt = court
-      let trimedyear = year
-      let trimedtypeOfCase = typeOfCase
+      let trimedcourt = court;
+      let trimedyear = year;
+      let trimedtypeOfCase = typeOfCase;
 
       // If metadata is missing, retrieve the existing document's metadata from the database
       if (!suitNumber || !court || !year || !typeOfCase) {
@@ -78,7 +79,8 @@ export const postUploadFormController = async (req: Request, res: Response) => {
 
     res.status(response.code).redirect(`/uploadForm?message=${response.message}`);
   } catch (err) {
-    console.error(err);
+    // console.error(err);
+    logger.error(err);
     res.status(500).redirect('/uploadForm?error=An+error+occurred+during+upload');
   }
 };
@@ -103,7 +105,8 @@ export const updateFormController = async (req: Request, res: Response) => {
 
     res.status(response.code).redirect(`/uploadForm/history?message=${response.message}`);
   } catch (err) {
-    console.error(err);
+    // console.error(err);
+     logger.error(err)
     res.status(500).redirect(`/uploadForm/history?error=An+error+occurred+during+update`);
   }
 };
@@ -123,7 +126,8 @@ export const deleteFormController = async (req: Request, res: Response) => {
 
     res.status(response.code).redirect(`/uploadForm/history?message=${response.message}`);
   } catch (err) {
-    console.error('Error in deleteForm:', err);
+     logger.error(`Error in deleteForm: ${err}`)
+    // console.error('Error in deleteForm:', err);
     res.status(500).redirect('/uploadForm/history?error=Error+deleting+document');
   }
 };
@@ -143,7 +147,8 @@ export const getFormHistoryController = async (req: Request, res: Response) => {
       totalPages: response.data.totalPages,
     });
   } catch (err) {
-    console.error(err);
+    // console.error(err);
+    logger.error(err)
     res.status(500).send('Error fetching documents');
   }
 };

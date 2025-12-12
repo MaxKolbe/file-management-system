@@ -3,6 +3,7 @@ import { convertDocxToHtml } from '../../utils/convertDocxToHtml.js';
 import { Request, Response } from 'express';
 import { getUser } from '../../utils/getUser.js';
 import { getHome, searchFiles, readFiles } from './home.services.js';
+import logger from '../../configs/logger.config.js';
 
 //Render Home View
 export const getHomeController = async (req: Request, res: Response) => {
@@ -20,7 +21,8 @@ export const getHomeController = async (req: Request, res: Response) => {
     const response = await getHome(basePath, relativePath);
     res.render('home', { req, folderContents: response.data, relativePath, lawyer: lawyer.data, query });
   } catch (err) {
-    console.error('Error reading directory:', err);
+    // console.error('Error reading directory:', err);
+    logger.error(`Error reading directory: ${err}`)
     res.status(500).send('Error reading directory');
   }
 };
@@ -38,7 +40,8 @@ export const downloadFileController = (req: Request, res: Response) => {
 
   res.download(fullPath, (err: Error) => {
     if (err) {
-      console.error('Error downloading file:', err);
+      // console.error('Error downloading file:', err);
+      logger.error(`Error downloading file: ${err}`)
       return res.status(404).redirect('/home/?error=Error+downloading+file');
     }
   });
@@ -75,7 +78,8 @@ export const readFilesController = async (req: Request, res: Response) => {
       res.setHeader('Content-Type', 'text/html');
       res.send(htmlContent);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
+      logger.error(err)
       res.status(500).send('Error reading the DOCX file');
     }
   } else {

@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import logger from '../../configs/logger.config.js';
 import filesModel from './files.model.js';
 import path from 'path';
 import fs from 'fs';
@@ -61,8 +62,8 @@ export const updateForm = async (
     return {
       code: 404,
       message: 'Document+not+found',
-    }; 
-  } 
+    };
+  }
 
   // Set file name based on the uploaded file or use the existing file name
   const fileName = file ? file.originalname : path.basename(document.filePath);
@@ -125,7 +126,8 @@ export const deleteForm = async (id: string) => {
 
   fs.unlink(filePath, async (err) => {
     if (err) {
-      console.error('Failed to delete file:', err);
+      // console.error('Failed to delete file:', err);
+      logger.error(`Failed to delete file: ${err}`);
       return {
         code: 500,
         message: 'Error+deleting+document',

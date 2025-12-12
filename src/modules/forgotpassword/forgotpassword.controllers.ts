@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { postForgotForm, getResetForm, postResetForm } from './forgotpassword.services.js';
+import logger from '../../configs/logger.config.js';
 
 export const getForgotFormController = async (req: Request, res: Response) => {
   res.render('forgotForm', { req });
@@ -11,11 +12,13 @@ export const postForgotFormController = async (req: Request, res: Response) => {
     const response = await postForgotForm(email, req, res);
 
     if (response.code === 404) {
-      console.log(`User does not exist`);
+      // console.log(`User does not exist`);
+      logger.warn(`User does not exist`);
       res.status(response.code).redirect(`/forgotPassword/?error=${response.message}`);
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    logger.error(err);
     res.status(500).redirect('/forgotPassword/?error=An+error+occurred+during+reset');
   }
 };
@@ -26,13 +29,15 @@ export const getResetFormController = async (req: Request, res: Response) => {
     const response = await getResetForm(id!);
 
     if (response.code === 400) {
-      console.log(`User does not exist`);
+      // console.log(`User does not exist`);
+      logger.warn(`User does not exist`);
       res.status(response.code).redirect(`/forgotPassword/?error=${response.message}`);
     }
 
     res.render('resetForm', { req, token: response.data });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    logger.error(err);
     res.status(500).redirect('/forgotPassword/?error=An+error+occurred+during+preset');
   }
 };
@@ -49,7 +54,8 @@ export const postResetFormController = async (req: Request, res: Response) => {
 
     res.redirect(`/login/?message=${response.message}`);
   } catch (err) {
-    console.log(err);
-      res.status(500).json({ message: "Internal server error" })
+    // console.log(err);
+    logger.error(err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

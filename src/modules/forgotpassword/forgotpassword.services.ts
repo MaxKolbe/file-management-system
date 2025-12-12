@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import logger from '../../configs/logger.config.js';
 import sendEmail from '../../utils/sendMail.js';
 import usersModel from '../users/users.model.js';
 import crypto from 'crypto';
@@ -37,7 +38,8 @@ export const getResetForm = async (id: string) => {
   });
 
   if (!user) {
-    console.log(`User does not exist`);
+    // console.log(`User does not exist`);
+    logger.warn(`User does not exist`);
     return {
       code: 400,
       message: 'User+not+found',
@@ -60,7 +62,8 @@ export const postResetForm = async (id: string, password: string) => {
   });
 
   if (!user) {
-    console.log(`User does not exist`);
+    // console.log(`User does not exist`);
+    logger.warn(`User does not exist`);
     return {
       code: 400,
       message: 'User+not+found',

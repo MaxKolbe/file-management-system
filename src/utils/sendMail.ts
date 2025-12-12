@@ -1,3 +1,4 @@
+import logger from '../configs/logger.config.js'
 import { Request, Response} from 'express'
 import nodemailer from "nodemailer"
 import dotenv from 'dotenv'
@@ -36,7 +37,8 @@ const sendEmail = (email: string, token: string, username: string, req: Request,
 
     transporter.sendMail(mailOptions, (err, info)=>{
         if(err){
-            console.log(`There was an error ${err}`)
+            // console.log(`There was an error ${err}`)
+            logger.error(err)
             res.status(400).json({message: "There was an error"})
         }else{ 
             res.status(200).redirect('forgotPassword/?message=Reset+mail+sent+successfully')

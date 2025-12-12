@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { StaffPayload } from '../../types/jwttype.d.js';
+import logger from '../../configs/logger.config.js';
 import userModel from './users.model.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -20,7 +21,8 @@ export const verifyStaff = async (req: Request, res: Response, next: NextFunctio
       next();
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    logger.error(err);
     res.status(500).redirect('/?error=Error+in+verifying+staff');
   }
 };
@@ -47,7 +49,8 @@ export const verifyStaffAndAdmin = async (req: Request, res: Response, next: Nex
       return res.status(403).redirect('/home?error=Not+a+Admin');
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    logger.error(err);
     return res.status(401).redirect('/?error=Error+in+verifying+token');
   }
 };
@@ -74,7 +77,8 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
       return res.status(500).redirect('/home?error=Not+a+SuperAdmin');
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    logger.error(err);
     return res.status(401).redirect('/?error=Error+in+verifying+token');
   }
 };

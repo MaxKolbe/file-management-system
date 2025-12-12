@@ -6,6 +6,7 @@ import userRouter from './modules/users/users.routes.js';
 import forgotp from './modules/forgotpassword/forgotpassword.routes.js';
 import userModel from './modules/users/users.model.js';
 import signJwt from './utils/createJwt.js';
+import logger from './configs/logger.config.js';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
@@ -106,7 +107,8 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 // })
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
+  logger.error(err)
+  // console.log(err);
   res.status(500).json({ message: 'Internal Server Error', error: err });
 });
 

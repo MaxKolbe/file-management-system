@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { postcustomForm } from './custom.services.js';
+import logger from '../../configs/logger.config.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -47,7 +48,8 @@ export const postcustomFormController = async (req: Request, res: Response) => {
 
     res.status(response.code).redirect(`/custom?message=${response.message}`);
   } catch (err) {
-    console.error(err);
+    // console.error(err);
+    logger.error(err)
     res.status(500).redirect('/custom?error=An+error+occurred+during+upload');
   }
 };
