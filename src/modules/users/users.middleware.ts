@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { StaffPayload } from '../types/jwttype.d.js';
-import userModel from '../modules/users/users.model.js';
+import { StaffPayload } from '../../types/jwttype.d.js';
+import userModel from './users.model.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -16,7 +16,7 @@ export const verifyStaff = async (req: Request, res: Response, next: NextFunctio
     const decoded = jwt.verify(token, process.env.SECRET as string) as StaffPayload;
     const user = await userModel.findById(decoded.id);
     if (user) {
-      req.user = user; // Rethink this
+      req.user = user;
       next();
     }
   } catch (err) {
@@ -41,7 +41,7 @@ export const verifyStaffAndAdmin = async (req: Request, res: Response, next: Nex
       return res.status(404).redirect('/home?error=User+not+found');
     }
     if (guy.isAdmin === true) {
-      req.user = guy; // Rethink this
+      req.user = guy;
       next();
     } else {
       return res.status(403).redirect('/home?error=Not+a+Admin');
@@ -68,7 +68,7 @@ export const verifyStaffAdminAndSuperAdmin = async (req: Request, res: Response,
       return res.status(404).redirect('/home?error=User+not+found');
     }
     if (guy.isSuperAdmin === true) {
-      req.user = guy; // Rethink this
+      req.user = guy;
       next();
     } else {
       return res.status(500).redirect('/home?error=Not+a+SuperAdmin');

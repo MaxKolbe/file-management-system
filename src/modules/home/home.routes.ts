@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { verifyStaff } from '../../middleware/authenticate.js';
+import { verifyStaff } from '../users/users.middleware.js';
 import { getHomeController, downloadFileController, searchFilesController, readFilesController } from './home.controllers.js';
 
 const homeRouter = Router();

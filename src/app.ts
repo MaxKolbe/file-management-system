@@ -10,7 +10,7 @@ import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import session from 'express-session';
-import { connectToDb } from './configs/db.js';
+import { connectToDb } from './configs/db.config.js';
 import { Strategy as GoogleStrategy, Profile, VerifyCallback } from 'passport-google-oauth20';
 import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';

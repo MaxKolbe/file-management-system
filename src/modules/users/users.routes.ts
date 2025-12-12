@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { verifyStaff, verifyStaffAdminAndSuperAdmin } from '../../middleware/authenticate.js';
+import { verifyStaff, verifyStaffAdminAndSuperAdmin } from './users.middleware.js';
 import {
   getSignupPageController,
   signupController,

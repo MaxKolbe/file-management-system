@@ -1,6 +1,6 @@
 import multer from 'multer';
 import { Router } from 'express';
-import { verifyStaffAndAdmin } from '../../middleware/authenticate.js';
+import { verifyStaffAndAdmin } from '../users/users.middleware.js';
 import { getcustomFormController, postcustomFormController, customStorage } from './custom.controllers.js';
 
 const customRouter = Router();
